@@ -1,0 +1,26 @@
+{
+  "name": "storybook-addon-playroom-example",
+  "version": "0.0.0-development",
+  "scripts": {
+    "build": "run-s build-storybook build-playroom",
+    "build-playroom": "playroom build",
+    "build-storybook": "build-storybook",
+    "playroom": "playroom start",
+    "start": "run-p storybook playroom",
+    "storybook": "start-storybook -p 6006"
+  },
+  "dependencies": {
+    "react": "^16.12.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.8.4",
+    "@storybook/addon-actions": "5.3.12",
+    "@storybook/addon-links": "5.3.12",
+    "@storybook/addons": "5.3.12",
+    "@storybook/react": "5.3.12",
+    "babel-loader": "8.0.6",
+    "npm-run-all": "4.1.5",
+    "playroom": "0.15.1",
+    "storybook-addon-playroom": "file:../"
+  }
+}

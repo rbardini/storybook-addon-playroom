@@ -1,0 +1,69 @@
+{
+  "name": "storybook-addon-playroom",
+  "version": "0.0.0-development",
+  "description": "Design with Playroom inside Storybook, using each story source as a starting point",
+  "keywords": [
+    "storybook",
+    "addon",
+    "playroom",
+    "react",
+    "jsx",
+    "design"
+  ],
+  "homepage": "https://github.com/rbardini/storybook-addon-playroom",
+  "bugs": {
+    "url": "https://github.com/rbardini/storybook-addon-playroom/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rbardini/storybook-addon-playroom.git"
+  },
+  "license": "MIT",
+  "author": "Rafael Bardini <rafael@rbardini.com> (https://rbardini.com)",
+  "main": "dist/index.js",
+  "files": [
+    "dist/**/*",
+    "*.js",
+    "*.d.ts"
+  ],
+  "scripts": {
+    "build": "babel --extensions '.tsx' src -d dist",
+    "postbuild": "tsc --declaration --emitDeclarationOnly",
+    "prebuild-example": "npm run build",
+    "build-example": "npm run build --prefix example",
+    "preexample": "npm run build",
+    "example": "npm run start --prefix example",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.tsx .",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@storybook/addons": "^5.3.12",
+    "@storybook/theming": "^5.3.12",
+    "base64-url": "^2.3.3",
+    "core-js": "^3.6.4",
+    "react": "^16.12.0",
+    "react-element-to-jsx-string": "^14.3.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.8.4",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
+    "@babel/preset-env": "7.8.4",
+    "@babel/preset-react": "7.8.3",
+    "@babel/preset-typescript": "7.8.3",
+    "@types/base64-url": "2.2.0",
+    "@types/node": "13.7.0",
+    "@typescript-eslint/eslint-plugin": "2.19.0",
+    "@typescript-eslint/parser": "2.19.0",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-plugin-import": "2.20.1",
+    "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-react": "7.18.3",
+    "eslint-plugin-react-hooks": "2.3.0",
+    "husky": "4.2.1",
+    "lint-staged": "10.0.7",
+    "semantic-release": "17.0.2",
+    "typescript": "3.7.5"
+  }
+}
