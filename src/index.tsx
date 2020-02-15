@@ -6,7 +6,7 @@ import {
   addons, makeDecorator, WrapperSettings, StoryGetter, StoryContext,
 } from '@storybook/addons';
 
-import { EVENTS } from './constants';
+import { EVENTS, PARAM_KEY } from './constants';
 
 type Props = {
   getStory: StoryGetter;
@@ -36,7 +36,7 @@ const Story: FC<Props> = ({
 
 export const withPlayroom = makeDecorator({
   name: 'withPlayroom',
-  parameterName: 'playroom',
+  parameterName: PARAM_KEY,
   allowDeprecatedUsage: true,
   wrapper: (getStory, context, settings) => (
     <Story
