@@ -31,7 +31,7 @@ within `.storybook/preview.js`:
 import { addDecorator } from '@storybook/react';
 import { withPlayroom } from 'storybook-addon-playroom';
 
-addDecorator(withPlayroom);
+addDecorator(withPlayroom); // before any other decorators
 ```
 
 See [`example`](example) for a minimal working setup.
