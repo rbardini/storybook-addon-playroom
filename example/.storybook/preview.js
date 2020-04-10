@@ -1,7 +1,7 @@
 import { addDecorator, addParameters } from '@storybook/react';
 import { withPlayroom } from 'storybook-addon-playroom';
 
-addDecorator(withPlayroom);
+addDecorator(withPlayroom); // before any other decorators
 
 addParameters({
   playroom: {
