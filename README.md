@@ -40,10 +40,11 @@ See [`example`](example) for a minimal working setup.
 
 The addon can be configured globally and per story with the `playroom` parameter. The following options are available:
 
-| Option     | Description                          | Default                 |
-|:-----------|:-------------------------------------|:------------------------|
-| `url`      | the Playroom URL                     | `http://localhost:9000` |
-| `disabled` | whether to disable the addon         | `false`                 |
+| Option                           | Description                              | Default                 |
+|:---------------------------------|:-----------------------------------------|:------------------------|
+| `url`                            | the Playroom URL                         | `http://localhost:9000` |
+| `disabled`                       | whether to disable the addon             | `false`                 |
+| `reactElementToJSXStringOptions` | [react-element-to-jsx-string options][1] | `{ sortProps: false }`  |
 
 ### Global configuration
 
@@ -82,3 +83,5 @@ myStory.story = {
   },
 };
 ```
+
+[1]: https://github.com/algolia/react-element-to-jsx-string#reactelementtojsxstringreactelement-options

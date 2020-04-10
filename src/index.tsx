@@ -21,11 +21,12 @@ const Story: FC<Props> = ({
     parameters: {
       url = 'http://localhost:9000',
       disabled = false,
+      reactElementToJSXStringOptions = { sortProps: false },
     } = {},
   },
 }) => {
   const story = getStory(context);
-  const jsxString = reactElementToJSXString(story);
+  const jsxString = reactElementToJSXString(story, reactElementToJSXStringOptions);
   const channel = addons.getChannel();
   const codeUrl = url && `${url}#?code=${base64Url.encode(jsxString)}`;
 
