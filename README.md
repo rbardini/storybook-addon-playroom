@@ -40,11 +40,12 @@ See [`example`](example) for a minimal working setup.
 
 The addon can be configured globally and per story with the `playroom` parameter. The following options are available:
 
-| Option                           | Description                              | Default                 |
-|:---------------------------------|:-----------------------------------------|:------------------------|
-| `url`                            | the Playroom URL                         | `http://localhost:9000` |
-| `disabled`                       | whether to disable the addon             | `false`                 |
-| `reactElementToJSXStringOptions` | [react-element-to-jsx-string options][1] | `{ sortProps: false }`  |
+| Option                           | Type      | Description                              | Default                 |
+|:---------------------------------|:----------|:-----------------------------------------|:------------------------|
+| `url`                            | `string`  | the Playroom URL                         | `http://localhost:9000` |
+| `code`                           | `string`  | code to be used instead of story source  |                         |
+| `disabled`                       | `boolean` | whether to disable the addon             | `false`                 |
+| `reactElementToJSXStringOptions` | `object`  | [react-element-to-jsx-string options][1] | `{ sortProps: false }`  |
 
 ### Global configuration
 
