@@ -11,4 +11,10 @@ export const ToStorybook = () => <Welcome showApp={linkTo('Button')} />;
 
 ToStorybook.story = {
   name: 'to Storybook',
+  parameters: {
+    playroom: {
+      // Links addon doesn't work in Playroom, so display an alert instead
+      code: "<Welcome showApp={() => alert('Button')} />",
+    },
+  },
 };
