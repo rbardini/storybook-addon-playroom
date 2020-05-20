@@ -7,6 +7,7 @@ import {
 } from '@storybook/addons';
 
 import { EVENTS, PARAM_KEY } from './constants';
+import { getOptions } from './utils';
 
 type Props = {
   getStory: StoryGetter;
@@ -18,14 +19,12 @@ const Story: FC<Props> = ({
   getStory,
   context,
   settings: {
-    parameters: {
-      url = 'http://localhost:9000',
-      code,
-      disabled = false,
-      reactElementToJSXStringOptions = { sortProps: false },
-    } = {},
+    parameters,
   },
 }) => {
+  const {
+    url, code, disabled, reactElementToJSXStringOptions,
+  } = getOptions(parameters);
   const story = getStory(context);
   const jsxString = code || reactElementToJSXString(story, reactElementToJSXStringOptions);
   const channel = addons.getChannel();

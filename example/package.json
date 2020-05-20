@@ -3,8 +3,11 @@
   "version": "0.0.0-development",
   "scripts": {
     "build": "run-s build-storybook build-playroom",
+    "prebuild-playroom": "npm run gen-snippets",
     "build-playroom": "playroom build",
     "build-storybook": "build-storybook",
+    "gen-snippets": "sb-playroom gen-snippets -c ../babel.config.json",
+    "preplayroom": "npm run gen-snippets",
     "playroom": "playroom start",
     "start": "run-p storybook playroom",
     "storybook": "start-storybook -p 6006"

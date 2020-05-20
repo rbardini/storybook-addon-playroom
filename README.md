@@ -85,4 +85,30 @@ myStory.story = {
 };
 ```
 
+## Generating Playroom snippets from stories
+
+> **Note:** This is an experimental feature.
+
+Playroom addon comes with a `sb-playroom` CLI tool that can auto-generate [Playroom snippets](https://github.com/seek-oss/playroom#snippets) from Storybook stories via the `gen-snippets` command:
+
+```console
+$ sb-playroom gen-snippets --help
+Usage: sb-playroom gen-snippets [options] [config-dir]
+
+generate Playroom snippets from stories (experimental)
+
+Options:
+  -o, --out-file <path>     output file (default: "snippets.json")
+  -c, --config-file <path>  Babel config file
+  -h, --help                display help for command
+```
+
+By default, `gen-snippets` will fetch the Storybook configuration from the `.storybook` directory and output the snippets to a `snippets.json` file. Different input and output paths can be passed as arguments.
+
+You can then reference the output file in [`playroom.config.js`](https://github.com/seek-oss/playroom#getting-started).
+
+### Babel configuration
+
+Because Playroom addon programmatically runs Storybook to collect story sources, Babel is used to compile stories on the fly. If the loaded Babel configuration does not work with your Storybook, a [Babel config file](https://babeljs.io/docs/en/config-files) can be defined with the `-c, --config-file` option.
+
 [1]: https://github.com/algolia/react-element-to-jsx-string#reactelementtojsxstringreactelement-options
