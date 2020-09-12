@@ -8,11 +8,20 @@ import registerRequireContextHook from 'babel-plugin-require-context-hook/regist
 import plur from 'plur';
 import { ReactNode } from 'react';
 import reactElementToJSXString from 'react-element-to-jsx-string';
+import { Loadable } from '@storybook/addons';
 import { ClientApi } from '@storybook/client-api';
 import { toRequireContext } from '@storybook/core/server';
 import * as storybook from '@storybook/react';
 
 import { getOptions } from './utils';
+
+interface ConfigurableClientApi extends ClientApi {
+  configure(
+    loader: Loadable,
+    module: NodeJS.Module | false,
+    showDeprecationWarning?: boolean,
+  ): void;
+}
 
 type Output = {
   stories: string[];
@@ -89,7 +98,7 @@ const configure = (options: Configuration) => {
   files.forEach((file) => require(file));
 
   if (stories.length > 0) {
-    storybook.configure(stories, false as unknown as NodeModule);
+    (storybook as unknown as ConfigurableClientApi).configure(stories, false, false);
   }
 };
 
@@ -98,7 +107,7 @@ export default (configDir: string, { outFile }: Options) => {
     configDir,
   });
 
-  const snippets = (storybook as unknown as ClientApi)
+  const snippets = (storybook as unknown as ConfigurableClientApi)
     .raw()
     .map(({
       kind: group,

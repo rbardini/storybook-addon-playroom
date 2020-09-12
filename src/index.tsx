@@ -38,7 +38,6 @@ const Story: FC<Props> = ({
 export const withPlayroom = makeDecorator({
   name: 'withPlayroom',
   parameterName: PARAM_KEY,
-  allowDeprecatedUsage: true,
   wrapper: (getStory, context, settings) => (
     <Story
       getStory={getStory}
