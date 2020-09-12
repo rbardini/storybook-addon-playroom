@@ -7,7 +7,7 @@
 
 Design with [Playroom](https://github.com/seek-oss/playroom) inside [Storybook](https://storybook.js.org), using each story source as a starting point.
 
-[Live demo](https://storybook-addon-playroom.netlify.com)
+[Live demo](https://storybook-addon-playroom.netlify.app)
 
 ![Demo](demo.gif)
 
