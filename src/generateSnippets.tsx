@@ -1,5 +1,6 @@
 /* eslint-disable global-require, no-console, no-underscore-dangle */
 /* eslint-disable import/no-dynamic-require, @typescript-eslint/no-var-requires */
+// Based on https://github.com/storybookjs/storybook/blob/master/addons/storyshots/storyshots-core/src/frameworks/configure.ts
 import fs from 'fs';
 import path from 'path';
 import global from 'global';
