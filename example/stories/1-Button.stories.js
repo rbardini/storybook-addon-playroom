@@ -1,18 +1,22 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/react/demo';
 
 export default {
   title: 'Button',
   component: Button,
+  argTypes: {
+    onClick: { action: 'onClick' },
+  },
 };
 
-export const Text = () => <Button onClick={action('clicked')}>Hello Button</Button>;
+const Template = (args) => <Button {...args} />;
 
-export const Emoji = () => (
-  <Button onClick={action('clicked')}>
-    <span role="img" aria-label="so cool">
-      😀 😎 👍 💯
-    </span>
-  </Button>
-);
+export const Text = Template.bind({});
+Text.args = {
+  children: 'Hello Button',
+};
+
+export const Emoji = Template.bind({});
+Emoji.args = {
+  children: '😀 😎 👍 💯',
+};
