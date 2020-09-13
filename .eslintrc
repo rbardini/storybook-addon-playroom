@@ -30,7 +30,6 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-use-before-define": "error",
     "import/extensions": ["error", "ignorePackages", { "tsx": "never" }],
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["example/**/*.js"]}],
     "no-undef": "off",
     "no-use-before-define": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".tsx"] }],
