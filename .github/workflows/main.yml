@@ -18,7 +18,7 @@ jobs:
         run: npm ci
 
       - name: Install example
-        run: npm ci --prefix example
+        run: npm i --prefix example
 
       - name: Build
         run: npm run build
