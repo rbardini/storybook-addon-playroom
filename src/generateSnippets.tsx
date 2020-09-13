@@ -9,7 +9,7 @@ import plur from 'plur';
 import { ReactNode } from 'react';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { Loadable } from '@storybook/addons';
-import { ClientApi } from '@storybook/client-api';
+import { ClientApi, ArgTypesEnhancer, DecoratorFunction } from '@storybook/client-api';
 import { toRequireContext } from '@storybook/core/server';
 import * as storybook from '@storybook/react';
 
@@ -24,8 +24,8 @@ interface ConfigurableClientApi extends ClientApi {
 }
 
 type Output = {
-  stories: string[];
-  files: string[];
+  preview?: string;
+  stories?: string[];
 }
 
 type Configuration = {
@@ -56,16 +56,16 @@ const getPreviewFile = (configDir: string) => resolveFile(configDir, ['preview',
 
 const getMainFile = (configDir: string) => resolveFile(configDir, ['main']);
 
-const getConfigPathParts = (input: string) => {
+const getConfigPathParts = (input: string): Output => {
   const configDir = path.resolve(input);
 
   if (fs.lstatSync(configDir).isDirectory()) {
-    const output: Output = { files: [], stories: [] };
+    const output: Output = {};
     const preview = getPreviewFile(configDir);
     const main = getMainFile(configDir);
 
     if (preview) {
-      output.files.push(preview);
+      output.preview = preview;
     }
 
     if (main) {
@@ -74,12 +74,13 @@ const getConfigPathParts = (input: string) => {
       output.stories = stories.map(
         (pattern: string | { path: string; recursive: boolean; match: string }) => {
           const { path: basePath, recursive, match } = toRequireContext(pattern);
+          const regex = new RegExp(match);
 
           return global.__requireContext(
             configDir,
             basePath,
             recursive,
-            new RegExp(match.slice(1, -1)),
+            regex,
           );
         },
       );
@@ -88,16 +89,39 @@ const getConfigPathParts = (input: string) => {
     return output;
   }
 
-  return { files: [configDir], stories: [] };
+  return { preview: configDir };
 };
 
 const configure = (options: Configuration) => {
   const { configDir } = options;
-  const { files, stories } = getConfigPathParts(configDir);
+  const { preview, stories } = getConfigPathParts(configDir);
 
-  files.forEach((file) => require(file));
+  if (preview) {
+    const {
+      parameters,
+      decorators,
+      globals,
+      globalTypes,
+      argTypesEnhancers,
+    } = require(preview);
 
-  if (stories.length > 0) {
+    if (decorators) {
+      decorators.forEach((decorator: DecoratorFunction) => (
+        (storybook as unknown as ConfigurableClientApi).addDecorator(decorator)));
+    }
+
+    if (parameters || globals || globalTypes) {
+      (storybook as unknown as ConfigurableClientApi)
+        .addParameters({ ...parameters, globals, globalTypes });
+    }
+
+    if (argTypesEnhancers) {
+      argTypesEnhancers.forEach((enhancer: ArgTypesEnhancer) => (
+        storybook as unknown as ConfigurableClientApi).addArgTypesEnhancer(enhancer));
+    }
+  }
+
+  if (stories?.length > 0) {
     (storybook as unknown as ConfigurableClientApi).configure(stories, false, false);
   }
 };
