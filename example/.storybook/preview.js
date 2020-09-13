@@ -1,9 +1,3 @@
-import { withPlayroom } from 'storybook-addon-playroom';
-
-export const decorators = [
-  withPlayroom, // before any other decorators
-];
-
 export const parameters = {
   playroom: {
     // Because Playroom is built inside Storybook on this example's deploy,
