@@ -1,1 +1,2 @@
-export { Button, Welcome } from '@storybook/react/demo';
+export { Button } from './Button';
+export { Welcome } from './Welcome';

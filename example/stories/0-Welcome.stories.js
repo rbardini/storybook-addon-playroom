@@ -1,6 +1,6 @@
 import React from 'react';
 import { linkTo } from '@storybook/addon-links';
-import { Welcome } from '@storybook/react/demo';
+import { Welcome } from '../components';
 
 export default {
   title: 'Welcome',
