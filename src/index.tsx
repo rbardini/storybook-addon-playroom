@@ -23,14 +23,14 @@ const Story: FC<Props> = ({
   },
 }) => {
   const {
-    url, code, disable, reactElementToJSXStringOptions,
+    url, code, reactElementToJSXStringOptions,
   } = getOptions(parameters);
   const story = getStory(context);
   const jsxString = code || reactElementToJSXString(story, reactElementToJSXStringOptions);
   const channel = addons.getChannel();
   const codeUrl = url && `${url}#?code=${base64Url.encode(jsxString)}`;
 
-  channel.emit(EVENTS.UPDATE, codeUrl, disable);
+  channel.emit(EVENTS.UPDATE, codeUrl);
 
   return <>{story}</>;
 };
