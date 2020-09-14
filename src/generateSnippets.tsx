@@ -14,7 +14,7 @@ import { ClientApi, ArgTypesEnhancer, DecoratorFunction } from '@storybook/clien
 import { toRequireContext } from '@storybook/core/server';
 import * as framework from '@storybook/react';
 
-import { getOptions } from './utils';
+import { getOptions, isStoryFnWithArgs } from './utils';
 
 interface ConfigurableClientApi extends ClientApi {
   configure(
@@ -151,7 +151,8 @@ export default (configDir: string, { outFile }: Options) => {
 
       console.log(`Generating ${yellow([group, name].join('/'))} snippet...`);
 
-      const element = getOriginal()() as ReactNode;
+      const storyFn = getOriginal();
+      const element = (isStoryFnWithArgs(storyFn) ? storyFn(storyFn.args) : storyFn()) as ReactNode;
       const code = reactElementToJSXString(element, reactElementToJSXStringOptions);
 
       return { group, name, code };
