@@ -17,7 +17,7 @@ Design with [Playroom](https://github.com/seek-oss/playroom) inside [Storybook](
 npm install --save-dev storybook-addon-playroom
 ```
 
-within `.storybook/main.js`:
+within [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#configure-your-storybook-project):
 
 ```js
 module.exports = {
@@ -25,64 +25,63 @@ module.exports = {
 }
 ```
 
-within `.storybook/preview.js`:
-
-```js
-import { addDecorator } from '@storybook/react';
-import { withPlayroom } from 'storybook-addon-playroom';
-
-addDecorator(withPlayroom); // before any other decorators
-```
-
 See [`example`](example) for a minimal working setup.
 
 ## Configuration
 
-The addon can be configured globally and per story with the `playroom` parameter. The following options are available:
+The addon can be configured via the `playroom` [parameter](https://storybook.js.org/docs/react/writing-stories/parameters). The following options are available:
 
 | Option                           | Type      | Description                              | Default                 |
 |:---------------------------------|:----------|:-----------------------------------------|:------------------------|
 | `url`                            | `string`  | the Playroom URL                         | `http://localhost:9000` |
 | `code`                           | `string`  | code to be used instead of story source  |                         |
-| `disabled`                       | `boolean` | whether to disable the addon             | `false`                 |
+| `disable`                        | `boolean` | whether to disable the addon             | `false`                 |
 | `reactElementToJSXStringOptions` | `object`  | [react-element-to-jsx-string options][1] | `{ sortProps: false }`  |
 
-### Global configuration
-
-To add Playroom to all stories, call `addParameters` in `.storybook/preview.js`:
+To configure for all stories, set the `playroom` parameter in [`.storybook/preview.js`](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering):
 
 ```js
-import { addParameters } from '@storybook/react';
-
-addParameters({
+export const parameters = {
   playroom: {
-    url: 'http://localhost:9000', // your Playroom URL (default)
-  },
-});
+    url: 'http://localhost:9000'
+  }
+}
 ```
 
-### Per-story configuration
+You can also configure on per-story or per-component basis using [parameter inheritance](https://storybook.js.org/docs/react/writing-stories/parameters#component-parameters):
 
-To configure Playroom for a single story or a set of stories, add the `playroom` parameter:
+```jsx
+// Button.stories.js
+
+// Use predefined code instead of story source in all Button stories
+export default {
+  title: 'Button',
+  parameters: {
+    playroom: {
+      code: '<Button>Hello Button</Button>'
+    }
+  }
+}
+
+// Disable addon in Button/Large story only
+export const Large = Template.bind({})
+Large.parameters = {
+  playroom: {
+    disable: true
+  }
+}
+```
+
+> **Note:** Disabling the addon does not hide the *Playroom* tab from preview. For that, you must use Storybook's own [`previewTabs`](https://github.com/storybookjs/storybook/pull/9095) parameter:
 
 ```js
-export default {
-  title: 'Stories',
-  parameters: {
-    playroom: {
-      url: 'http://localhost:9000',
-    },
-  },
-};
-
-export const myStory = () => '<h1>Hello World</h1>';
-myStory.story = {
-  parameters: {
-    playroom: {
-      url: 'http://localhost:9000',
-    },
-  },
-};
+Story.parameters = {
+  previewTabs: {
+    'storybook/playroom/panel': {
+      hidden: true
+    }
+  }
+}
 ```
 
 ## Generating Playroom snippets from stories

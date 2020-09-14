@@ -21,13 +21,9 @@ const Iframe = styled.iframe({
 
 const Panel: FC<Props> = ({ active, channel }) => {
   const [url, setUrl] = useState('');
-  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    const listener: Listener = (newUrl: string, shouldDisable: boolean) => {
-      setUrl(newUrl);
-      setDisabled(shouldDisable);
-    };
+    const listener: Listener = (newUrl: string) => setUrl(newUrl);
 
     channel.on(EVENTS.UPDATE, listener);
 
@@ -39,18 +35,6 @@ const Panel: FC<Props> = ({ active, channel }) => {
   }
 
   if (!url) {
-    return (
-      <Message>
-        Missing Playroom
-        {' '}
-        <code>url</code>
-        {' '}
-        parameter, please check your configuration.
-      </Message>
-    );
-  }
-
-  if (disabled || !url) {
     return (
       <Message>
         Playroom has been disabled for this story.

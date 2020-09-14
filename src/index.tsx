@@ -23,14 +23,14 @@ const Story: FC<Props> = ({
   },
 }) => {
   const {
-    url, code, disabled, reactElementToJSXStringOptions,
+    url, code, reactElementToJSXStringOptions,
   } = getOptions(parameters);
   const story = getStory(context);
   const jsxString = code || reactElementToJSXString(story, reactElementToJSXStringOptions);
   const channel = addons.getChannel();
   const codeUrl = url && `${url}#?code=${base64Url.encode(jsxString)}`;
 
-  channel.emit(EVENTS.UPDATE, codeUrl, disabled);
+  channel.emit(EVENTS.UPDATE, codeUrl);
 
   return <>{story}</>;
 };
@@ -38,7 +38,6 @@ const Story: FC<Props> = ({
 export const withPlayroom = makeDecorator({
   name: 'withPlayroom',
   parameterName: PARAM_KEY,
-  allowDeprecatedUsage: true,
   wrapper: (getStory, context, settings) => (
     <Story
       getStory={getStory}

@@ -1,5 +1,6 @@
 /* eslint-disable global-require, no-console, no-underscore-dangle */
 /* eslint-disable import/no-dynamic-require, @typescript-eslint/no-var-requires */
+// Based on https://github.com/storybookjs/storybook/blob/master/addons/storyshots/storyshots-core/src/frameworks/configure.ts
 import fs from 'fs';
 import path from 'path';
 import global from 'global';
@@ -8,15 +9,24 @@ import registerRequireContextHook from 'babel-plugin-require-context-hook/regist
 import plur from 'plur';
 import { ReactNode } from 'react';
 import reactElementToJSXString from 'react-element-to-jsx-string';
-import { ClientApi } from '@storybook/client-api';
+import { Loadable } from '@storybook/addons';
+import { ClientApi, ArgTypesEnhancer, DecoratorFunction } from '@storybook/client-api';
 import { toRequireContext } from '@storybook/core/server';
-import * as storybook from '@storybook/react';
+import * as framework from '@storybook/react';
 
-import { getOptions } from './utils';
+import { getOptions, isStoryFnWithArgs } from './utils';
+
+interface ConfigurableClientApi extends ClientApi {
+  configure(
+    loader: Loadable,
+    module: NodeJS.Module | false,
+    showDeprecationWarning?: boolean,
+  ): void;
+}
 
 type Output = {
-  stories: string[];
-  files: string[];
+  preview?: string;
+  stories?: string[];
 }
 
 type Configuration = {
@@ -28,6 +38,8 @@ type Options = {
 }
 
 registerRequireContextHook();
+
+const storybook = framework as unknown as ConfigurableClientApi;
 
 const isFile = (file: string) => {
   try {
@@ -47,16 +59,16 @@ const getPreviewFile = (configDir: string) => resolveFile(configDir, ['preview',
 
 const getMainFile = (configDir: string) => resolveFile(configDir, ['main']);
 
-const getConfigPathParts = (input: string) => {
+const getConfigPathParts = (input: string): Output => {
   const configDir = path.resolve(input);
 
   if (fs.lstatSync(configDir).isDirectory()) {
-    const output: Output = { files: [], stories: [] };
+    const output: Output = {};
     const preview = getPreviewFile(configDir);
     const main = getMainFile(configDir);
 
     if (preview) {
-      output.files.push(preview);
+      output.preview = preview;
     }
 
     if (main) {
@@ -65,12 +77,13 @@ const getConfigPathParts = (input: string) => {
       output.stories = stories.map(
         (pattern: string | { path: string; recursive: boolean; match: string }) => {
           const { path: basePath, recursive, match } = toRequireContext(pattern);
+          const regex = new RegExp(match);
 
           return global.__requireContext(
             configDir,
             basePath,
             recursive,
-            new RegExp(match.slice(1, -1)),
+            regex,
           );
         },
       );
@@ -79,17 +92,39 @@ const getConfigPathParts = (input: string) => {
     return output;
   }
 
-  return { files: [configDir], stories: [] };
+  return { preview: configDir };
 };
 
 const configure = (options: Configuration) => {
   const { configDir } = options;
-  const { files, stories } = getConfigPathParts(configDir);
+  const { preview, stories } = getConfigPathParts(configDir);
 
-  files.forEach((file) => require(file));
+  if (preview) {
+    const {
+      parameters,
+      decorators,
+      globals,
+      globalTypes,
+      argTypesEnhancers,
+    } = require(preview);
 
-  if (stories.length > 0) {
-    storybook.configure(stories, false as unknown as NodeModule);
+    if (decorators) {
+      decorators.forEach((decorator: DecoratorFunction) => (
+        storybook.addDecorator(decorator)));
+    }
+
+    if (parameters || globals || globalTypes) {
+      storybook.addParameters({ ...parameters, globals, globalTypes });
+    }
+
+    if (argTypesEnhancers) {
+      argTypesEnhancers.forEach((enhancer: ArgTypesEnhancer) => (
+        storybook.addArgTypesEnhancer(enhancer)));
+    }
+  }
+
+  if (stories?.length > 0) {
+    storybook.configure(stories, false, false);
   }
 };
 
@@ -98,7 +133,7 @@ export default (configDir: string, { outFile }: Options) => {
     configDir,
   });
 
-  const snippets = (storybook as unknown as ClientApi)
+  const snippets = storybook
     .raw()
     .map(({
       kind: group,
@@ -108,15 +143,16 @@ export default (configDir: string, { outFile }: Options) => {
         playroom,
       } = {},
     }) => {
-      const { disabled, reactElementToJSXStringOptions } = getOptions(playroom);
+      const { disable, reactElementToJSXStringOptions } = getOptions(playroom);
 
-      if (disabled) {
+      if (disable) {
         return undefined;
       }
 
       console.log(`Generating ${yellow([group, name].join('/'))} snippet...`);
 
-      const element = getOriginal()() as ReactNode;
+      const storyFn = getOriginal();
+      const element = (isStoryFnWithArgs(storyFn) ? storyFn(storyFn.args) : storyFn()) as ReactNode;
       const code = reactElementToJSXString(element, reactElementToJSXStringOptions);
 
       return { group, name, code };

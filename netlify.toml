@@ -1,3 +1,3 @@
 [build]
-  command = "npm ci --prefix example && npm run build-example"
+  command = "npm i --prefix example && npm run build-example"
   publish = "example/storybook-static"
