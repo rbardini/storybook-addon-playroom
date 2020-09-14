@@ -4,15 +4,15 @@ import { Options as ReactElementToJSXStringOptions } from 'react-element-to-jsx-
 type Options = {
   url?: string;
   code?: string;
-  disabled?: boolean;
+  disable?: boolean;
   reactElementToJSXStringOptions?: ReactElementToJSXStringOptions;
 }
 
 export const getOptions = ({
   url = 'http://localhost:9000',
   code = '',
-  disabled = false,
+  disable = false,
   reactElementToJSXStringOptions = { sortProps: false },
 }: Options = {}): Required<Options> => ({
-  url, code, disabled, reactElementToJSXStringOptions,
+  url, code, disable, reactElementToJSXStringOptions,
 });

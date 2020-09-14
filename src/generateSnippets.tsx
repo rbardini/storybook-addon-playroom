@@ -142,9 +142,9 @@ export default (configDir: string, { outFile }: Options) => {
         playroom,
       } = {},
     }) => {
-      const { disabled, reactElementToJSXStringOptions } = getOptions(playroom);
+      const { disable, reactElementToJSXStringOptions } = getOptions(playroom);
 
-      if (disabled) {
+      if (disable) {
         return undefined;
       }
 
