@@ -12,7 +12,7 @@ import reactElementToJSXString from 'react-element-to-jsx-string';
 import { Loadable } from '@storybook/addons';
 import { ClientApi, ArgTypesEnhancer, DecoratorFunction } from '@storybook/client-api';
 import { toRequireContext } from '@storybook/core/server';
-import * as storybook from '@storybook/react';
+import * as framework from '@storybook/react';
 
 import { getOptions } from './utils';
 
@@ -38,6 +38,8 @@ type Options = {
 }
 
 registerRequireContextHook();
+
+const storybook = framework as unknown as ConfigurableClientApi;
 
 const isFile = (file: string) => {
   try {
@@ -108,22 +110,21 @@ const configure = (options: Configuration) => {
 
     if (decorators) {
       decorators.forEach((decorator: DecoratorFunction) => (
-        (storybook as unknown as ConfigurableClientApi).addDecorator(decorator)));
+        storybook.addDecorator(decorator)));
     }
 
     if (parameters || globals || globalTypes) {
-      (storybook as unknown as ConfigurableClientApi)
-        .addParameters({ ...parameters, globals, globalTypes });
+      storybook.addParameters({ ...parameters, globals, globalTypes });
     }
 
     if (argTypesEnhancers) {
       argTypesEnhancers.forEach((enhancer: ArgTypesEnhancer) => (
-        storybook as unknown as ConfigurableClientApi).addArgTypesEnhancer(enhancer));
+        storybook.addArgTypesEnhancer(enhancer)));
     }
   }
 
   if (stories?.length > 0) {
-    (storybook as unknown as ConfigurableClientApi).configure(stories, false, false);
+    storybook.configure(stories, false, false);
   }
 };
 
@@ -132,7 +133,7 @@ export default (configDir: string, { outFile }: Options) => {
     configDir,
   });
 
-  const snippets = (storybook as unknown as ConfigurableClientApi)
+  const snippets = storybook
     .raw()
     .map(({
       kind: group,
