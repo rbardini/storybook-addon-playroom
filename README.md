@@ -21,8 +21,8 @@ within [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/over
 
 ```js
 module.exports = {
-  addons: ['storybook-addon-playroom']
-}
+  addons: ['storybook-addon-playroom'],
+};
 ```
 
 See [`example`](example) for a minimal working setup.
@@ -32,7 +32,7 @@ See [`example`](example) for a minimal working setup.
 The addon can be configured via the `playroom` [parameter](https://storybook.js.org/docs/react/writing-stories/parameters). The following options are available:
 
 | Option                           | Type      | Description                              | Default                 |
-|:---------------------------------|:----------|:-----------------------------------------|:------------------------|
+| :------------------------------- | :-------- | :--------------------------------------- | :---------------------- |
 | `url`                            | `string`  | the Playroom URL                         | `http://localhost:9000` |
 | `code`                           | `string`  | code to be used instead of story source  |                         |
 | `disable`                        | `boolean` | whether to disable the addon             | `false`                 |
@@ -43,9 +43,9 @@ To configure for all stories, set the `playroom` parameter in [`.storybook/previ
 ```js
 export const parameters = {
   playroom: {
-    url: 'http://localhost:9000'
-  }
-}
+    url: 'http://localhost:9000',
+  },
+};
 ```
 
 You can also configure on per-story or per-component basis using [parameter inheritance](https://storybook.js.org/docs/react/writing-stories/parameters#component-parameters):
@@ -58,30 +58,30 @@ export default {
   title: 'Button',
   parameters: {
     playroom: {
-      code: '<Button>Hello Button</Button>'
-    }
-  }
-}
+      code: '<Button>Hello Button</Button>',
+    },
+  },
+};
 
 // Disable addon in Button/Large story only
-export const Large = Template.bind({})
+export const Large = Template.bind({});
 Large.parameters = {
   playroom: {
-    disable: true
-  }
-}
+    disable: true,
+  },
+};
 ```
 
-> **Note:** Disabling the addon does not hide the *Playroom* tab from preview. For that, you must use Storybook's own [`previewTabs`](https://github.com/storybookjs/storybook/pull/9095) parameter:
+> **Note:** Disabling the addon does not hide the _Playroom_ tab from preview. For that, you must use Storybook's own [`previewTabs`](https://github.com/storybookjs/storybook/pull/9095) parameter:
 
 ```js
 Story.parameters = {
   previewTabs: {
     'storybook/playroom/panel': {
-      hidden: true
-    }
-  }
-}
+      hidden: true,
+    },
+  },
+};
 ```
 
 ## Generating Playroom snippets from stories

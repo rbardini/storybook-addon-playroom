@@ -10,7 +10,11 @@ import plur from 'plur';
 import { ReactNode } from 'react';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { Loadable } from '@storybook/addons';
-import { ClientApi, ArgTypesEnhancer, DecoratorFunction } from '@storybook/client-api';
+import {
+  ClientApi,
+  ArgTypesEnhancer,
+  DecoratorFunction,
+} from '@storybook/client-api';
 import { toRequireContext } from '@storybook/core/server';
 import * as framework from '@storybook/react';
 
@@ -27,19 +31,19 @@ interface ConfigurableClientApi extends ClientApi {
 type Output = {
   preview?: string;
   stories?: string[];
-}
+};
 
 type Configuration = {
   configDir?: string;
-}
+};
 
 type Options = {
   outFile: string;
-}
+};
 
 registerRequireContextHook();
 
-const storybook = framework as unknown as ConfigurableClientApi;
+const storybook = (framework as unknown) as ConfigurableClientApi;
 
 const isFile = (file: string) => {
   try {
@@ -51,11 +55,15 @@ const isFile = (file: string) => {
 
 const extensions = ['ts', 'tsx', 'js', 'jsx'];
 
-const resolveFile = (configDir: string, filenames: string[]) => filenames
-  .flatMap((filename) => extensions.map((ext) => path.join(configDir, `${filename}.${ext}`)))
-  .find(isFile) || false;
+const resolveFile = (configDir: string, filenames: string[]) =>
+  filenames
+    .flatMap((filename) =>
+      extensions.map((ext) => path.join(configDir, `${filename}.${ext}`)),
+    )
+    .find(isFile) || false;
 
-const getPreviewFile = (configDir: string) => resolveFile(configDir, ['preview', 'config']);
+const getPreviewFile = (configDir: string) =>
+  resolveFile(configDir, ['preview', 'config']);
 
 const getMainFile = (configDir: string) => resolveFile(configDir, ['main']);
 
@@ -75,16 +83,15 @@ const getConfigPathParts = (input: string): Output => {
       const { stories = [] } = require(main);
 
       output.stories = stories.map(
-        (pattern: string | { path: string; recursive: boolean; match: string }) => {
-          const { path: basePath, recursive, match } = toRequireContext(pattern);
+        (
+          pattern: string | { path: string; recursive: boolean; match: string },
+        ) => {
+          const { path: basePath, recursive, match } = toRequireContext(
+            pattern,
+          );
           const regex = new RegExp(match);
 
-          return global.__requireContext(
-            configDir,
-            basePath,
-            recursive,
-            regex,
-          );
+          return global.__requireContext(configDir, basePath, recursive, regex);
         },
       );
     }
@@ -109,8 +116,9 @@ const configure = (options: Configuration) => {
     } = require(preview);
 
     if (decorators) {
-      decorators.forEach((decorator: DecoratorFunction) => (
-        storybook.addDecorator(decorator)));
+      decorators.forEach((decorator: DecoratorFunction) =>
+        storybook.addDecorator(decorator),
+      );
     }
 
     if (parameters || globals || globalTypes) {
@@ -118,8 +126,9 @@ const configure = (options: Configuration) => {
     }
 
     if (argTypesEnhancers) {
-      argTypesEnhancers.forEach((enhancer: ArgTypesEnhancer) => (
-        storybook.addArgTypesEnhancer(enhancer)));
+      argTypesEnhancers.forEach((enhancer: ArgTypesEnhancer) =>
+        storybook.addArgTypesEnhancer(enhancer),
+      );
     }
   }
 
@@ -135,28 +144,30 @@ export default (configDir: string, { outFile }: Options) => {
 
   const snippets = storybook
     .raw()
-    .map(({
-      kind: group,
-      name,
-      getOriginal,
-      parameters: {
-        playroom,
-      } = {},
-    }) => {
-      const { disable, reactElementToJSXStringOptions } = getOptions(playroom);
+    .map(
+      ({ kind: group, name, getOriginal, parameters: { playroom } = {} }) => {
+        const { disable, reactElementToJSXStringOptions } = getOptions(
+          playroom,
+        );
 
-      if (disable) {
-        return undefined;
-      }
+        if (disable) {
+          return undefined;
+        }
 
-      console.log(`Generating ${yellow([group, name].join('/'))} snippet...`);
+        console.log(`Generating ${yellow([group, name].join('/'))} snippet...`);
 
-      const storyFn = getOriginal();
-      const element = (isStoryFnWithArgs(storyFn) ? storyFn(storyFn.args) : storyFn()) as ReactNode;
-      const code = reactElementToJSXString(element, reactElementToJSXStringOptions);
+        const storyFn = getOriginal();
+        const element = (isStoryFnWithArgs(storyFn)
+          ? storyFn(storyFn.args)
+          : storyFn()) as ReactNode;
+        const code = reactElementToJSXString(
+          element,
+          reactElementToJSXStringOptions,
+        );
 
-      return { group, name, code };
-    })
+        return { group, name, code };
+      },
+    )
     .filter(Boolean);
 
   fs.writeFileSync(
@@ -164,5 +175,7 @@ export default (configDir: string, { outFile }: Options) => {
     JSON.stringify(snippets, null, 2),
   );
 
-  console.log(`\n${snippets.length} ${plur('snippet', snippets.length)} generated.`);
+  console.log(
+    `\n${snippets.length} ${plur('snippet', snippets.length)} generated.`,
+  );
 };

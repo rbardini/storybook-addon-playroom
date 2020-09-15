@@ -12,9 +12,7 @@ addons.register(ADDON_ID, () => {
     type: types.TAB,
     route: ({ storyId }) => `/playroom/${storyId}`,
     match: ({ viewMode }) => viewMode === 'playroom',
-    render: ({ active }) => (
-      <Panel active={active} channel={channel} />
-    ),
+    render: ({ active }) => <Panel active={active} channel={channel} />,
     paramKey: PARAM_KEY,
   });
 });

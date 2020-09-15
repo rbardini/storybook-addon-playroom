@@ -7,7 +7,7 @@ import { EVENTS } from './constants';
 type Props = {
   active: boolean;
   channel: ReturnType<AddonStore['getChannel']>;
-}
+};
 
 const Message = styled.p({
   textAlign: 'center',
@@ -35,16 +35,10 @@ const Panel: FC<Props> = ({ active, channel }) => {
   }
 
   if (!url) {
-    return (
-      <Message>
-        Playroom has been disabled for this story.
-      </Message>
-    );
+    return <Message>Playroom has been disabled for this story.</Message>;
   }
 
-  return (
-    <Iframe key={url} allowFullScreen src={url} title="Playroom" />
-  );
+  return <Iframe key={url} allowFullScreen src={url} title="Playroom" />;
 };
 
 export default Panel;
