@@ -1,3 +1,7 @@
 {
-  "{*.js,*.tsx,bin/*}": "eslint --fix"
+  "{*.js,*.tsx,bin/*}": [
+    "eslint --fix",
+    "prettier --write"
+  ],
+  "*.{json,md,yml}": "prettier --write"
 }
