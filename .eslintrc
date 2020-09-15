@@ -19,19 +19,23 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-use-before-define": "error",
-    "import/extensions": ["error", "ignorePackages", { "js": "never", "tsx": "never" }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      { "js": "never", "tsx": "never" }
+    ],
     "import/prefer-default-export": "off",
     "no-undef": "off",
     "no-use-before-define": "off",
-    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".tsx"] }],
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".js", ".tsx"] }
+    ],
     "react/prop-types": "off"
   },
   "settings": {
