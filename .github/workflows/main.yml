@@ -40,6 +40,9 @@ jobs:
 
       - name: Release
         uses: cycjimmy/semantic-release-action@v2
+        with:
+          extra_plugins: |
+            conventional-changelog-conventionalcommits
         if: github.ref == 'refs/heads/master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
