@@ -3,12 +3,11 @@
   "version": "0.0.0-development",
   "description": "Design with Playroom inside Storybook, using each story source as a starting point",
   "keywords": [
-    "storybook",
-    "addon",
+    "storybook-addons",
+    "design",
     "playroom",
     "react",
-    "jsx",
-    "design"
+    "jsx"
   ],
   "homepage": "https://github.com/rbardini/storybook-addon-playroom",
   "bugs": {
@@ -19,7 +18,11 @@
     "url": "https://github.com/rbardini/storybook-addon-playroom.git"
   },
   "license": "MIT",
-  "author": "Rafael Bardini <rafael@rbardini.com> (https://rbardini.com)",
+  "author": {
+    "name": "Rafael Bardini",
+    "email": "rafael@rbardini.com",
+    "url": "https://rbardini.com/"
+  },
   "main": "dist/index.js",
   "bin": {
     "sb-playroom": "./bin/sb-playroom"
@@ -84,5 +87,9 @@
   },
   "peerDependencies": {
     "@storybook/react": "^6"
+  },
+  "storybook": {
+    "displayName": "Playroom",
+    "icon": "https://raw.githubusercontent.com/rbardini/storybook-addon-playroom/HEAD/icon.png"
   }
 }
