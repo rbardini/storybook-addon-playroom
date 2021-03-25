@@ -7,7 +7,10 @@
     "design",
     "playroom",
     "react",
-    "jsx"
+    "jsx",
+    "storybook-addon",
+    "storybook",
+    "addon"
   ],
   "homepage": "https://github.com/rbardini/storybook-addon-playroom",
   "bugs": {
@@ -90,6 +93,6 @@
   },
   "storybook": {
     "displayName": "Playroom",
-    "icon": "https://raw.githubusercontent.com/rbardini/storybook-addon-playroom/HEAD/icon.png"
+    "icon": "https://user-images.githubusercontent.com/263385/102231945-8b7e0e00-3ebc-11eb-9f1f-5da27319d553.png"
   }
 }
