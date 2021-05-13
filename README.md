@@ -7,11 +7,13 @@
 
 Design with [Playroom](https://github.com/seek-oss/playroom) inside [Storybook](https://storybook.js.org), using each story source as a starting point.
 
-[Live demo](https://storybook-addon-playroom.js.org)
-
 ![Demo](demo.gif)
 
-## Installation
+[View demo →](https://storybook-addon-playroom.js.org)
+
+## Getting started
+
+> **Note:** Playroom must be set up and running before using this addon, see [instructions](https://github.com/seek-oss/playroom#getting-started).
 
 ```console
 npm install --save-dev storybook-addon-playroom
