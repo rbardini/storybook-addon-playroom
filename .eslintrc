@@ -5,11 +5,11 @@
     "node": true
   },
   "extends": [
+    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "airbnb",
-    "prettier",
-    "prettier/react"
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -31,6 +31,7 @@
     ],
     "import/prefer-default-export": "off",
     "no-undef": "off",
+    "no-unused-vars": "off",
     "no-use-before-define": "off",
     "react/jsx-filename-extension": [
       "error",
