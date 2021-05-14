@@ -15,7 +15,7 @@ import {
   ArgTypesEnhancer,
   DecoratorFunction,
 } from '@storybook/client-api';
-import { toRequireContext } from '@storybook/core/server';
+import { toRequireContext } from '@storybook/core-common';
 import * as framework from '@storybook/react';
 
 import { getOptions, isStoryFnWithArgs } from './utils';
