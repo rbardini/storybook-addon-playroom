@@ -10,7 +10,7 @@ program
   .option('-c, --config-file <path>', 'Babel config file')
   .action((configDir = '.storybook', { configFile, ...options }) => {
     require('@babel/register')({ configFile });
-    require('../dist/generateSnippets').default(configDir, options);
+    require('../dist/esm/generateSnippets').default(configDir, options);
   });
 
 program
