@@ -13,9 +13,7 @@ program
     require('../dist/esm/generateSnippets').default(configDir, options);
   });
 
-program
-  .version(version, '-v, --version')
-  .parse(process.argv);
+program.version(version, '-v, --version').parse(process.argv);
 
 if (program.rawArgs.length < 3) {
   program.help();
