@@ -40,7 +40,7 @@
     "prebuild": "rm -rf dist",
     "build": "run-s build:*",
     "build:cjs": "BABEL_ENV=cjs babel --extensions '.tsx' src -d dist/cjs",
-    "build:esm": "BABEL_ENV=esm babel --extensions '.tsx' src -d dist/esm",
+    "build:esm": "babel --extensions '.tsx' src -d dist/esm",
     "postbuild": "tsc --declaration --emitDeclarationOnly",
     "prebuild-example": "npm run build",
     "build-example": "npm run build --prefix example",
