@@ -15,7 +15,7 @@ import {
   ArgTypesEnhancer,
   DecoratorFunction,
 } from '@storybook/client-api';
-import { toRequireContext } from '@storybook/core/server';
+import { toRequireContext } from '@storybook/core-common';
 import * as framework from '@storybook/react';
 
 import { getOptions, isStoryFnWithArgs } from './utils';
@@ -43,7 +43,7 @@ type Options = {
 
 registerRequireContextHook();
 
-const storybook = (framework as unknown) as ConfigurableClientApi;
+const storybook = framework as unknown as ConfigurableClientApi;
 
 const isFile = (file: string) => {
   try {
@@ -86,9 +86,11 @@ const getConfigPathParts = (input: string): Output => {
         (
           pattern: string | { path: string; recursive: boolean; match: string },
         ) => {
-          const { path: basePath, recursive, match } = toRequireContext(
-            pattern,
-          );
+          const {
+            path: basePath,
+            recursive,
+            match,
+          } = toRequireContext(pattern);
           const regex = new RegExp(match);
 
           return global.__requireContext(configDir, basePath, recursive, regex);
@@ -146,9 +148,8 @@ export default (configDir: string, { outFile }: Options) => {
     .raw()
     .map(
       ({ kind: group, name, getOriginal, parameters: { playroom } = {} }) => {
-        const { disable, reactElementToJSXStringOptions } = getOptions(
-          playroom,
-        );
+        const { disable, reactElementToJSXStringOptions } =
+          getOptions(playroom);
 
         if (disable) {
           return undefined;
@@ -157,9 +158,9 @@ export default (configDir: string, { outFile }: Options) => {
         console.log(`Generating ${yellow([group, name].join('/'))} snippet...`);
 
         const storyFn = getOriginal();
-        const element = (isStoryFnWithArgs(storyFn)
-          ? storyFn(storyFn.args)
-          : storyFn()) as ReactNode;
+        const element = (
+          isStoryFnWithArgs(storyFn) ? storyFn(storyFn.args) : storyFn()
+        ) as ReactNode;
         const code = reactElementToJSXString(
           element,
           reactElementToJSXStringOptions,

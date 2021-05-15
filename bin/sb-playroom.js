@@ -9,13 +9,11 @@ program
   .option('-o, --out-file <path>', 'output file', 'snippets.json')
   .option('-c, --config-file <path>', 'Babel config file')
   .action((configDir = '.storybook', { configFile, ...options }) => {
-    require('@babel/register')({ configFile });
-    require('../dist/generateSnippets').default(configDir, options);
+    require('@babel/register')({ configFile, only: [new RegExp()] });
+    require('../dist/cjs/generateSnippets').default(configDir, options);
   });
 
-program
-  .version(version, '-v, --version')
-  .parse(process.argv);
+program.version(version, '-v, --version').parse(process.argv);
 
 if (program.rawArgs.length < 3) {
   program.help();

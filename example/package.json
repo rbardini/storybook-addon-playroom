@@ -13,18 +13,18 @@
     "storybook": "start-storybook -s public -p 6006"
   },
   "dependencies": {
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "@storybook/addon-links": "^6.0.0",
-    "@storybook/addon-storysource": "^6.0.0",
-    "@storybook/addons": "^6.0.0",
-    "@storybook/react": "^6.0.0",
+    "@storybook/addon-links": "^6.2.0",
+    "@storybook/addon-storysource": "^6.2.0",
+    "@storybook/addons": "^6.2.0",
+    "@storybook/react": "^6.2.0",
     "babel-loader": "^8.0.0",
     "npm-run-all": "^4.0.0",
-    "playroom": "^0.22.0",
+    "playroom": "^0.23.0",
     "storybook-addon-playroom": "file:../"
   }
 }
