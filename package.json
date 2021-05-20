@@ -31,9 +31,9 @@
     "./preset": "./preset.js",
     "./register": "./register.js"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
   "bin": {
     "sb-playroom": "./bin/sb-playroom.js"
   },
