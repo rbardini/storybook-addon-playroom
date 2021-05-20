@@ -23,9 +23,17 @@
     "email": "rafael@rbardini.com",
     "url": "https://rbardini.com/"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./preset": "./preset.js",
+    "./register": "./register.js"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
   "bin": {
     "sb-playroom": "./bin/sb-playroom.js"
   },
@@ -39,9 +47,9 @@
     "prepare": "husky install",
     "prebuild": "rm -rf dist",
     "build": "run-s build:*",
+    "postbuild": "tsc --declaration --emitDeclarationOnly",
     "build:cjs": "BABEL_ENV=cjs babel --extensions '.tsx' src -d dist/cjs",
     "build:esm": "babel --extensions '.tsx' src -d dist/esm",
-    "postbuild": "tsc --declaration --emitDeclarationOnly",
     "prebuild-example": "npm run build",
     "build-example": "npm run build --prefix example",
     "preexample": "npm run build",
@@ -49,10 +57,11 @@
     "format": "prettier --ignore-path .gitignore --write .",
     "format-check": "prettier --ignore-path .gitignore --check .",
     "lint": "eslint --ignore-path .gitignore --ext .js,.tsx . bin/*",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "package-check": "package-check"
   },
   "dependencies": {
-    "@babel/core": "^7.11.6",
+    "@babel/core": "^7.14.3",
     "@babel/register": "^7.11.5",
     "@storybook/addons": "^6.2.0",
     "@storybook/client-api": "^6.2.0",
@@ -70,19 +79,20 @@
     "react-element-to-jsx-string": "^14.3.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.13.16",
+    "@babel/cli": "7.14.3",
     "@babel/preset-env": "7.14.2",
     "@babel/preset-react": "7.13.13",
     "@babel/preset-typescript": "7.13.0",
+    "@skypack/package-check": "0.2.2",
     "@storybook/react": "6.2.9",
     "@types/base64-url": "2.2.0",
-    "@types/node": "15.3.0",
-    "@typescript-eslint/eslint-plugin": "4.23.0",
-    "@typescript-eslint/parser": "4.23.0",
+    "@types/node": "15.3.1",
+    "@typescript-eslint/eslint-plugin": "4.24.0",
+    "@typescript-eslint/parser": "4.24.0",
     "eslint": "7.26.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-import": "2.23.1",
+    "eslint-plugin-import": "2.23.2",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.23.2",
     "eslint-plugin-react-hooks": "4.2.0",

@@ -38,6 +38,9 @@ jobs:
       - name: Type-check
         run: npm run type-check
 
+      - name: Package-check
+        run: npm run package-check
+
       - name: Release
         uses: cycjimmy/semantic-release-action@v2
         with:
