@@ -24,7 +24,7 @@
     "@storybook/react": "^6.2.0",
     "babel-loader": "^8.0.0",
     "npm-run-all": "^4.0.0",
-    "playroom": "^0.25.0",
+    "playroom": "^0.27.0",
     "storybook-addon-playroom": "file:../"
   }
 }
