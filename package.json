@@ -74,6 +74,7 @@
     "commander": "8.0.0",
     "core-js": "^3.6.0",
     "global": "^4.4.0",
+    "playroom": "^0.27.0",
     "plur": "^4.0.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
