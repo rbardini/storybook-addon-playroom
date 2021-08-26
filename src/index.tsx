@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
+import { createUrl } from 'playroom/utils';
 import React, { FC } from 'react';
 import reactElementToJSXString from 'react-element-to-jsx-string';
-import base64Url from 'base64-url';
 import {
   addons,
   makeDecorator,
@@ -25,7 +25,7 @@ const Story: FC<Props> = ({ getStory, context, settings: { parameters } }) => {
   const jsxString =
     code || reactElementToJSXString(story, reactElementToJSXStringOptions);
   const channel = addons.getChannel();
-  const codeUrl = url && `${url}#?code=${base64Url.encode(jsxString)}`;
+  const codeUrl = url && createUrl({ baseUrl: url, code: jsxString });
 
   channel.emit(EVENTS.UPDATE, codeUrl);
 
