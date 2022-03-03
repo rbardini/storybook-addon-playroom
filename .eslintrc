@@ -33,6 +33,10 @@
     "no-undef": "off",
     "no-unused-vars": "off",
     "no-use-before-define": "off",
+    "react/function-component-definition": [
+      "error",
+      { "namedComponents": "arrow-function" }
+    ],
     "react/jsx-filename-extension": [
       "error",
       { "extensions": [".js", ".tsx"] }

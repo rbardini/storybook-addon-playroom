@@ -5,12 +5,12 @@
     "build": "run-s build-storybook build-playroom",
     "prebuild-playroom": "npm run gen-snippets",
     "build-playroom": "playroom build",
-    "build-storybook": "build-storybook -s public",
+    "build-storybook": "build-storybook",
     "gen-snippets": "sb-playroom gen-snippets -c ../babel.config.json",
     "preplayroom": "npm run gen-snippets",
     "playroom": "playroom start",
     "start": "run-p storybook playroom",
-    "storybook": "start-storybook -s public -p 6006"
+    "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
     "react": "^16.8.0",
@@ -18,10 +18,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "@storybook/addon-links": "^6.2.0",
-    "@storybook/addon-storysource": "^6.2.0",
-    "@storybook/addons": "^6.2.0",
-    "@storybook/react": "^6.2.0",
+    "@storybook/addon-links": "^6.4.0",
+    "@storybook/addon-storysource": "^6.4.0",
+    "@storybook/addons": "^6.4.0",
+    "@storybook/builder-webpack5": "^6.4.0",
+    "@storybook/manager-webpack5": "^6.4.0",
+    "@storybook/react": "^6.4.0",
     "babel-loader": "^8.0.0",
     "npm-run-all": "^4.0.0",
     "playroom": "^0.27.0",

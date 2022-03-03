@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* eslint-disable global-require, @typescript-eslint/no-var-requires */
+/* eslint-disable default-param-last, global-require, @typescript-eslint/no-var-requires */
 const program = require('commander');
 const { version } = require('../package.json');
 
@@ -11,6 +11,7 @@ program
   .action((configDir = '.storybook', { configFile, ...options }) => {
     require('@babel/register')({ configFile, only: [new RegExp()] });
     require('../dist/cjs/generateSnippets').default(configDir, options);
+    process.exit();
   });
 
 program.version(version, '-v, --version').parse(process.argv);

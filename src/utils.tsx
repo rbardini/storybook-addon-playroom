@@ -1,5 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-import { Args, ArgsStoryFn, StoryFn } from '@storybook/addons';
 import { Options as ReactElementToJSXStringOptions } from 'react-element-to-jsx-string';
 
 type Options = {
@@ -8,8 +7,6 @@ type Options = {
   disable?: boolean;
   reactElementToJSXStringOptions?: ReactElementToJSXStringOptions;
 };
-
-type StoryFnWithArgs = ArgsStoryFn & { args?: Args };
 
 export const getOptions = ({
   url = 'http://localhost:9000',
@@ -22,7 +19,3 @@ export const getOptions = ({
   disable,
   reactElementToJSXStringOptions,
 });
-
-export const isStoryFnWithArgs = (
-  storyFn: StoryFn | StoryFnWithArgs,
-): storyFn is StoryFnWithArgs => 'args' in storyFn;
