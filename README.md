@@ -2,8 +2,7 @@
 
 [![npm package version](https://img.shields.io/npm/v/storybook-addon-playroom)](https://www.npmjs.com/package/storybook-addon-playroom)
 [![Build status](https://img.shields.io/github/workflow/status/rbardini/storybook-addon-playroom/Main)](https://github.com/rbardini/storybook-addon-playroom/actions)
-[![Dependencies status](https://img.shields.io/david/rbardini/storybook-addon-playroom)](https://david-dm.org/rbardini/storybook-addon-playroom)
-[![devDependencies status](https://img.shields.io/david/dev/rbardini/storybook-addon-playroom)](https://david-dm.org/rbardini/storybook-addon-playroom?type=dev)
+[![Dependencies status](https://img.shields.io/librariesio/release/npm/storybook-addon-playroom)](https://libraries.io/npm/storybook-addon-playroom)
 
 Design with [Playroom](https://github.com/seek-oss/playroom) inside [Storybook](https://storybook.js.org), using each story source as a starting point.
 
