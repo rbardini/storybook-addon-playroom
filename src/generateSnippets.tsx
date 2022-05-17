@@ -6,7 +6,7 @@ import global from 'global';
 import { yellow } from 'ansi-colors';
 import registerRequireContextHook from 'babel-plugin-require-context-hook/register';
 import registerGlobalJSDOM from 'global-jsdom';
-import plur from 'plur';
+import { ReactNode } from 'react';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { Loadable } from '@storybook/addons';
 import { ClientApi } from '@storybook/client-api';
@@ -170,20 +170,19 @@ export default (configDir: string, { outFile }: Options) => {
       console.log(`Generating ${yellow([group, name].join('/'))} snippet...`);
 
       const code = reactElementToJSXString(
-        storyFn(),
+        storyFn() as ReactNode,
         reactElementToJSXStringOptions,
       );
 
       return { group, name, code };
     })
     .filter(Boolean);
+  const count = snippets.length;
 
   fs.writeFileSync(
     path.resolve(process.cwd(), outFile),
     JSON.stringify(snippets, null, 2),
   );
 
-  console.log(
-    `\n${snippets.length} ${plur('snippet', snippets.length)} generated.`,
-  );
+  console.log(`\n${count} ${count === 1 ? 'snippet' : 'snippets'} generated.`);
 };
