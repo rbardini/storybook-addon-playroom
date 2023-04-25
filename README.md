@@ -1,7 +1,7 @@
 # Storybook Playroom Addon
 
 [![npm package version](https://img.shields.io/npm/v/storybook-addon-playroom)](https://www.npmjs.com/package/storybook-addon-playroom)
-[![Build status](https://img.shields.io/github/workflow/status/rbardini/storybook-addon-playroom/Main)](https://github.com/rbardini/storybook-addon-playroom/actions)
+[![Build status](https://img.shields.io/github/actions/workflow/status/rbardini/storybook-addon-playroom/main.yml)](https://github.com/rbardini/storybook-addon-playroom/actions)
 [![Dependencies status](https://img.shields.io/librariesio/release/npm/storybook-addon-playroom)](https://libraries.io/npm/storybook-addon-playroom)
 
 🧩 Design with [Playroom](https://github.com/seek-oss/playroom) inside [Storybook](https://storybook.js.org), using each story source as a starting point.
@@ -18,15 +18,12 @@
 npm install --save-dev storybook-addon-playroom
 ```
 
-within [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#configure-your-storybook-project):
-
 ```js
-module.exports = {
+// .storybook/main.js
+export default {
   addons: ['storybook-addon-playroom'],
-};
+}
 ```
-
-See [`example`](example) for a minimal working setup.
 
 ## Configuration
 
@@ -46,7 +43,7 @@ export const parameters = {
   playroom: {
     url: 'http://localhost:9000',
   },
-};
+}
 ```
 
 You can also configure on per-story or per-component basis using [parameter inheritance](https://storybook.js.org/docs/react/writing-stories/parameters#component-parameters):
@@ -62,15 +59,15 @@ export default {
       code: '<Button>Hello Button</Button>',
     },
   },
-};
+}
 
 // Disable addon in Button/Large story only
-export const Large = Template.bind({});
+export const Large = Template.bind({})
 Large.parameters = {
   playroom: {
     disable: true,
   },
-};
+}
 ```
 
 > **Note:** Disabling the addon does not hide the _Playroom_ tab from preview. For that, you must use Storybook's own [`previewTabs`](https://github.com/storybookjs/storybook/pull/9095) parameter:
@@ -82,7 +79,7 @@ Story.parameters = {
       hidden: true,
     },
   },
-};
+}
 ```
 
 ## Generating Playroom snippets from stories

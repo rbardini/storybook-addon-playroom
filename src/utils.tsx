@@ -1,12 +1,11 @@
-/* eslint-disable import/prefer-default-export */
-import { Options as ReactElementToJSXStringOptions } from 'react-element-to-jsx-string';
+import { Options as ReactElementToJSXStringOptions } from 'react-element-to-jsx-string'
 
 type Options = {
-  url?: string;
-  code?: string;
-  disable?: boolean;
-  reactElementToJSXStringOptions?: ReactElementToJSXStringOptions;
-};
+  url?: string
+  code?: string
+  disable?: boolean
+  reactElementToJSXStringOptions?: ReactElementToJSXStringOptions
+}
 
 export const getOptions = ({
   url = 'http://localhost:9000',
@@ -18,4 +17,4 @@ export const getOptions = ({
   code,
   disable,
   reactElementToJSXStringOptions,
-});
+})

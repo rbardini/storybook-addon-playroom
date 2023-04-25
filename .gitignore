@@ -1,6 +1,8 @@
+.vscode/
+dist/
+node_modules/
+storybook-static/
 .DS_Store
-.vscode
-dist
-node_modules
-storybook-static
+.env
+build-storybook.log
 snippets.json
