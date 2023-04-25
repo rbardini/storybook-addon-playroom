@@ -25,88 +25,100 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     },
-    "./preset": "./preset.js",
-    "./register": "./register.js"
+    "./manager": {
+      "require": "./dist/manager.js",
+      "import": "./dist/manager.mjs",
+      "types": "./dist/manager.d.ts"
+    },
+    "./preview": {
+      "require": "./dist/preview.js",
+      "import": "./dist/preview.mjs",
+      "types": "./dist/preview.d.ts"
+    },
+    "./package.json": "./package.json"
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
-  "bin": {
-    "sb-playroom": "./bin/sb-playroom.js"
-  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
-    "bin/*",
     "dist/**/*",
-    "preset.js",
-    "register.js"
+    "manager.js",
+    "preview.js",
+    "*.d.ts"
   ],
   "scripts": {
-    "prepare": "husky install",
-    "prebuild": "rm -rf dist",
-    "build": "run-s build:*",
-    "postbuild": "tsc --declaration --emitDeclarationOnly",
-    "build:cjs": "BABEL_ENV=cjs babel --extensions '.tsx' src -d dist/cjs",
-    "build:esm": "babel --extensions '.tsx' src -d dist/esm",
-    "prebuild-example": "npm run build",
-    "build-example": "npm run build --prefix example",
-    "preexample": "npm run build",
-    "example": "npm run start --prefix example",
+    "prebuild": "npm run clean",
+    "build": "tsup",
+    "postbuild": "tsup --platform node",
+    "prebuild-playroom": "GEN_SNIPPETS=1 ./bin/sb-playroom.js gen-snippets",
+    "build-playroom": "playroom build",
+    "build-storybook": "storybook build",
+    "build:watch": "npm run build -- --watch",
+    "clean": "rimraf ./dist",
     "format": "prettier --ignore-path .gitignore --write .",
     "format-check": "prettier --ignore-path .gitignore --check .",
-    "lint": "eslint --ignore-path .gitignore --ext .js,.tsx . bin/*",
-    "type-check": "tsc --noEmit",
-    "package-check": "package-check"
+    "package-check": "package-check",
+    "prepare": "husky install",
+    "start": "concurrently \"npm run build:watch\" \"npm run storybook -- --quiet\"",
+    "storybook": "storybook dev -p 6006",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@babel/core": "^7.14.0",
-    "@babel/register": "^7.11.0",
-    "@storybook/addons": "^6.4.0",
-    "@storybook/client-api": "^6.4.0",
-    "@storybook/core-common": "^6.4.0",
-    "@storybook/react": "^6.4.0",
-    "@storybook/theming": "^6.4.0",
     "ansi-colors": "^4.1.0",
-    "babel-plugin-require-context-hook": "^1.0.0",
-    "commander": "^9.0.0",
-    "core-js": "^3.6.0",
-    "global": "^4.4.0",
-    "global-jsdom": "^8.4.0",
-    "jsdom": "^20.0.0",
-    "playroom": "^0.28.0",
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "global-jsdom": "^8.8.0",
+    "playroom": "^0.31.0",
     "react-element-to-jsx-string": "^15.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.19.3",
-    "@babel/preset-env": "7.19.3",
-    "@babel/preset-react": "7.18.6",
-    "@babel/preset-typescript": "7.18.6",
-    "@skypack/package-check": "0.2.2",
-    "@types/node": "18.7.23",
-    "@typescript-eslint/eslint-plugin": "5.38.1",
-    "@typescript-eslint/parser": "5.38.1",
-    "eslint": "8.24.0",
-    "eslint-config-airbnb": "19.0.4",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-jsx-a11y": "6.6.1",
-    "eslint-plugin-react": "7.31.8",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "husky": "8.0.1",
-    "lint-staged": "13.0.3",
-    "npm-run-all": "4.1.5",
-    "prettier": "2.7.1",
-    "typescript": "4.8.4"
+    "@skypack/package-check": "^0.2.0",
+    "@storybook/react": "^7.0.0",
+    "@storybook/react-vite": "^7.0.0",
+    "@types/node": "^18.15.0",
+    "@types/react": "^18.0.0",
+    "@vitejs/plugin-react": "^3.1.0",
+    "babel-plugin-transform-import-ignore": "^1.1.0",
+    "concurrently": "^8.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.3.0",
+    "prettier-plugin-packagejson": "^2.4.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rimraf": "^5.0.0",
+    "storybook": "^7.0.0",
+    "style-loader": "^3.3.0",
+    "tsup": "^6.6.0",
+    "typescript": "^4.9.0",
+    "vite": "^4.1.0"
   },
   "peerDependencies": {
-    "@storybook/react": "^6.4.0"
+    "@storybook/babel-plugin-require-context-hook": "^1.0.0",
+    "@storybook/core-common": "^7.0.0",
+    "@storybook/core-webpack": "^7.0.0",
+    "@storybook/manager-api": "^7.0.0",
+    "@storybook/preview-api": "^7.0.0",
+    "@storybook/theming": "^7.0.0",
+    "@storybook/types": "^7.0.0",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "storybook": {
     "displayName": "Playroom",
+    "supportedFrameworks": [
+      "react"
+    ],
     "icon": "https://raw.githubusercontent.com/rbardini/storybook-addon-playroom/HEAD/icon.png"
   }
 }

@@ -1,33 +1,20 @@
-const presetEnvOptions = {
-  bugfixes: true,
-  corejs: '3',
-  modules: false,
-  shippedProposals: true,
-  targets: 'defaults',
-  useBuiltIns: 'usage',
-};
+module.exports = api => {
+  api.cache(true)
 
-module.exports = {
-  assumptions: {
-    noDocumentAll: true,
-    privateFieldsAsProperties: true,
-    setClassMethods: true,
-    setComputedProperties: true,
-    setPublicClassFields: true,
-    setSpreadProperties: true,
-  },
-  env: {
-    cjs: {
-      presets: [
-        ['@babel/preset-env', { ...presetEnvOptions, modules: 'cjs' }],
-        '@babel/preset-typescript',
-        '@babel/preset-react',
-      ],
-    },
-  },
-  presets: [
-    ['@babel/preset-env', presetEnvOptions],
-    '@babel/preset-typescript',
+  const presets = [
+    '@babel/preset-env',
     '@babel/preset-react',
-  ],
-};
+    '@babel/preset-typescript',
+  ]
+  const plugins = []
+
+  // Ignore CSS imports when generating snippets
+  if (process.env.GEN_SNIPPETS) {
+    plugins.push([
+      'babel-plugin-transform-import-ignore',
+      { patterns: ['.css'] },
+    ])
+  }
+
+  return { presets, plugins }
+}
