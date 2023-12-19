@@ -29,12 +29,13 @@ export default {
 
 The addon can be configured via the `playroom` [parameter](https://storybook.js.org/docs/react/writing-stories/parameters). The following options are available:
 
-| Option                           | Type      | Description                              | Default                 |
-| :------------------------------- | :-------- | :--------------------------------------- | :---------------------- |
-| `url`                            | `string`  | the Playroom URL                         | `http://localhost:9000` |
-| `code`                           | `string`  | code to be used instead of story source  |                         |
-| `disable`                        | `boolean` | whether to disable the addon             | `false`                 |
-| `reactElementToJSXStringOptions` | `object`  | [react-element-to-jsx-string options][1] | `{ sortProps: false }`  |
+| Option                           | Type      | Description                                       | Default                 |
+| :------------------------------- | :-------- | :------------------------------------------------ | :---------------------- |
+| `url`                            | `string`  | the Playroom URL                                  | `http://localhost:9000` |
+| `code`                           | `string`  | code to be used instead of story source           |                         |
+| `disable`                        | `boolean` | whether to disable the addon                      | `false`                 |
+| `omitCodeDecorators`             | `boolean` | whether to omit global decorators in stories code | `false`                 |
+| `reactElementToJSXStringOptions` | `object`  | [react-element-to-jsx-string options][1]          | `{ sortProps: false }`  |
 
 To configure for all stories, set the `playroom` parameter in [`.storybook/preview.js`](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering):
 
