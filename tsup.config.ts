@@ -6,7 +6,7 @@ export default defineConfig(options => {
   return {
     entry: isNode
       ? ['src/generateSnippets.ts']
-      : ['src/index.ts', 'src/preview.ts', 'src/manager.ts'],
+      : ['src/index.ts', 'src/preview.ts', 'src/manager.tsx'],
     splitting: false,
     minify: !options.watch,
     format: ['cjs', 'esm'],

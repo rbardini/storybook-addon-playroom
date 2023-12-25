@@ -1,4 +1,5 @@
 import { addons, types } from '@storybook/manager-api'
+import React from 'react'
 
 import { ADDON_ID, PARAM_KEY, TAB_ID } from './constants'
 import { Tab } from './Tab'
@@ -9,7 +10,7 @@ addons.register(ADDON_ID, () => {
     title: 'Playroom',
     route: ({ storyId }) => `/playroom/${storyId}`,
     match: ({ viewMode }) => viewMode === 'playroom',
-    render: Tab,
+    render: ({ active }) => <Tab active={active} />,
     paramKey: PARAM_KEY,
   })
 })

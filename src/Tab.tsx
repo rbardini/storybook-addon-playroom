@@ -1,6 +1,6 @@
 import { useChannel } from '@storybook/manager-api'
 import { styled } from '@storybook/theming'
-import React, { FC, useState } from 'react'
+import React, { memo, useState } from 'react'
 
 import { EVENTS } from './constants'
 
@@ -18,7 +18,7 @@ const Iframe = styled.iframe({
   width: '100%',
 })
 
-export const Tab: FC<TabProps> = ({ active }) => {
+export const Tab = memo<TabProps>(({ active }) => {
   const [url, setUrl] = useState('')
   useChannel({ [EVENTS.UPDATE]: setUrl })
 
@@ -31,4 +31,4 @@ export const Tab: FC<TabProps> = ({ active }) => {
   }
 
   return <Iframe key={url} allowFullScreen src={url} title="Playroom" />
-}
+})
