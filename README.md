@@ -8,7 +8,7 @@
 
 ![Demo](demo.gif)
 
-[View demo →](https://storybook-addon-playroom.js.org)
+[View demo →](https://storybook-addon-playroom.rbrd.in)
 
 ## Getting started
 
