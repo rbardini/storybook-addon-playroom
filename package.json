@@ -62,8 +62,9 @@
     "format": "prettier --ignore-path .gitignore --write .",
     "format-check": "prettier --ignore-path .gitignore --check .",
     "package-check": "package-check",
+    "playroom": "playroom",
     "prepare": "husky install",
-    "start": "concurrently \"npm run build:watch\" \"npm run storybook -- --quiet\"",
+    "start": "concurrently \"npm run build:watch\" \"npm run storybook -- --quiet\" \"npm run playroom\"",
     "storybook": "storybook dev -p 6006",
     "type-check": "tsc --noEmit"
   },
