@@ -15,13 +15,17 @@ export const withGlobals = (
   StoryFn: StoryFunction<Renderer>,
   context: StoryContext<Renderer>,
 ) => {
-  const { parameters } = context
+  const { parameters, undecoratedStoryFn } = context
   const playroomConfig = parameters[PARAM_KEY]
-  const { url, code, reactElementToJSXStringOptions } =
+  const { url, code, includeDecorators, reactElementToJSXStringOptions } =
     getOptions(playroomConfig)
   const story = StoryFn() as ReactElement
+  const storyCode = includeDecorators
+    ? story
+    : (undecoratedStoryFn(context) as ReactElement)
+
   const jsxString =
-    code || reactElementToJSXString(story, reactElementToJSXStringOptions)
+    code || reactElementToJSXString(storyCode, reactElementToJSXStringOptions)
   const codeUrl = url && createUrl({ baseUrl: url, code: jsxString })
 
   const emit = useChannel({})
