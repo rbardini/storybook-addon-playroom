@@ -76,7 +76,7 @@ Large.parameters = {
 ```js
 Story.parameters = {
   previewTabs: {
-    'storybook/playroom/panel': {
+    'storybook/playroom/tab': {
       hidden: true,
     },
   },
