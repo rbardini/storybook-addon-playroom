@@ -20,6 +20,7 @@ npm install --save-dev storybook-addon-playroom
 
 ```js
 // .storybook/main.js
+
 export default {
   addons: ['storybook-addon-playroom'],
 }
@@ -37,9 +38,11 @@ The addon can be configured via the `playroom` [parameter](https://storybook.js.
 | `includeDecorators`              | `boolean` | whether to include global decorators in stories code | `false`                 |
 | `reactElementToJSXStringOptions` | `object`  | [react-element-to-jsx-string options][1]             | `{ sortProps: false }`  |
 
-To configure for all stories, set the `playroom` parameter in [`.storybook/preview.js`](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering):
+To configure for all stories, set the `playroom` [parameter](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering):
 
 ```js
+// .storybook/preview.js
+
 export const parameters = {
   playroom: {
     url: 'http://localhost:9000',
@@ -52,33 +55,68 @@ You can also configure on per-story or per-component basis using [parameter inhe
 ```jsx
 // Button.stories.js
 
-// Use predefined code instead of story source in all Button stories
 export default {
   title: 'Button',
+  component: Button,
   parameters: {
     playroom: {
+      // Use predefined code instead of story source on all Button stories
       code: '<Button>Hello Button</Button>',
     },
   },
 }
 
-// Disable addon in Button/Large story only
-export const Large = Template.bind({})
-Large.parameters = {
-  playroom: {
-    disable: true,
+export const Large = {
+  args: {
+    size: 'large',
+  },
+  parameters: {
+    playroom: {
+      // Disable addon in Button/Large story only
+      disable: true,
+    },
   },
 }
 ```
 
-> **Note:** Disabling the addon does not hide the _Playroom_ tab from preview. For that, you must use Storybook's own [`previewTabs`](https://github.com/storybookjs/storybook/pull/9095) parameter:
+> **Note:** Disabling the addon does not hide the _Playroom_ tab. For that, you must use Storybook's own [`previewTabs`](https://github.com/storybookjs/storybook/pull/9095) parameter:
 
 ```js
-Story.parameters = {
-  previewTabs: {
-    'storybook/playroom/tab': {
-      hidden: true,
+// Button.stories.js
+
+export const Large = {
+  parameters: {
+    playroom: {
+      disable: true,
     },
+    previewTabs: {
+      // Hide Playroom tab
+      'storybook/playroom/tab': {
+        hidden: true,
+      },
+    },
+  },
+}
+```
+
+## FAQ
+
+### Why does my generated Playroom code contain nonsensical component names?
+
+If you see mangled component names like `<O />` instead of `<Card />`, you may need to [customize Storybook's Vite setup](https://storybook.js.org/docs/api/main-config/main-config-vite-final) and [disable minification](https://vitejs.dev/config/build-options#build-minify):
+
+```js
+// .storybook/main.js
+
+export default {
+  addons: ['storybook-addon-playroom'],
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      build: {
+        // Disable minification
+        minify: false,
+      },
+    })
   },
 }
 ```
