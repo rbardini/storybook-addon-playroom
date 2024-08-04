@@ -1,8 +1,8 @@
-import { useChannel } from '@storybook/manager-api'
+import { useGlobals } from '@storybook/manager-api'
 import { styled } from '@storybook/theming'
 import React, { memo, useState } from 'react'
 
-import { EVENTS } from './constants'
+import { EVENTS, PARAM_KEY } from './constants'
 
 interface TabProps {
   active: boolean
@@ -19,16 +19,16 @@ const Iframe = styled.iframe({
 })
 
 export const Tab = memo<TabProps>(({ active }) => {
-  const [url, setUrl] = useState('')
-  useChannel({ [EVENTS.UPDATE]: setUrl })
+  const [globals] = useGlobals()
+  const { codeUrl } = globals[PARAM_KEY]
 
   if (!active) {
     return null
   }
 
-  if (!url) {
+  if (!codeUrl) {
     return <Message>Playroom has been disabled for this story.</Message>
   }
 
-  return <Iframe key={url} allowFullScreen src={url} title="Playroom" />
+  return <Iframe key={codeUrl} allowFullScreen src={codeUrl} title="Playroom" />
 })

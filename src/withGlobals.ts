@@ -1,4 +1,4 @@
-import { useChannel } from '@storybook/preview-api'
+import { useGlobals } from '@storybook/preview-api'
 import type {
   Renderer,
   PartialStoryFn as StoryFunction,
@@ -9,27 +9,43 @@ import type { ReactElement } from 'react'
 import reactElementToJSXString from 'react-element-to-jsx-string'
 
 import { EVENTS, PARAM_KEY } from './constants'
-import { getOptions } from './utils'
+import { getGlobals, getOptions, setGlobals } from './utils'
+
+const updateCodeUrl = (
+  [globals, updateGlobals]: ReturnType<typeof useGlobals>,
+  codeUrl: string | undefined,
+) =>
+  getGlobals(globals).codeUrl !== codeUrl &&
+  setGlobals(updateGlobals, { codeUrl })
 
 export const withGlobals = (
   StoryFn: StoryFunction<Renderer>,
   context: StoryContext<Renderer>,
 ) => {
+  const globals = useGlobals()
   const { parameters, undecoratedStoryFn } = context
-  const playroomConfig = parameters[PARAM_KEY]
-  const { url, code, includeDecorators, reactElementToJSXStringOptions } =
-    getOptions(playroomConfig)
+  const {
+    url,
+    code,
+    disable,
+    includeDecorators,
+    reactElementToJSXStringOptions,
+  } = getOptions(parameters[PARAM_KEY])
+
   const story = StoryFn() as ReactElement
+
+  if (disable) {
+    updateCodeUrl(globals, undefined)
+    return story
+  }
+
   const storyCode = includeDecorators
     ? story
     : (undecoratedStoryFn(context) as ReactElement)
-
   const jsxString =
     code || reactElementToJSXString(storyCode, reactElementToJSXStringOptions)
   const codeUrl = url && createUrl({ baseUrl: url, code: jsxString })
 
-  const emit = useChannel({})
-  emit(EVENTS.UPDATE, codeUrl)
-
+  updateCodeUrl(globals, codeUrl)
   return story
 }
