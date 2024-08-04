@@ -5,4 +5,3 @@ storybook-static/
 .DS_Store
 .env
 build-storybook.log
-snippets.json

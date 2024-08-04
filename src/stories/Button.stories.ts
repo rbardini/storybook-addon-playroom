@@ -10,7 +10,6 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-  tags: ['autodocs'],
 }
 
 export default meta
@@ -18,26 +17,26 @@ export default meta
 export const Primary: Story = {
   args: {
     primary: true,
-    label: 'Button',
+    children: 'Button',
   },
 }
 
 export const Secondary: Story = {
   args: {
-    label: 'Button',
+    children: 'Button',
   },
 }
 
 export const Large: Story = {
   args: {
     size: 'large',
-    label: 'Button',
+    children: 'Button',
   },
 }
 
 export const Small: Story = {
   args: {
     size: 'small',
-    label: 'Button',
+    children: 'Button',
   },
 }
