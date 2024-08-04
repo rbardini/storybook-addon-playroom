@@ -1,9 +1,8 @@
-const path = require('path')
+import path from 'path'
 
-module.exports = {
+export default {
   components: './components.ts',
   outputPath: './storybook-static/playroom',
-  snippets: './snippets.json',
   exampleCode: '<Button />',
   openBrowser: false,
   // Webpack loaders/presets are transitive Playroom dependencies
@@ -11,8 +10,8 @@ module.exports = {
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
-          include: path.resolve(__dirname, 'src'),
+          test: /\.tsx?$/i,
+          include: path.resolve(import.meta.dirname, 'src'),
           use: [
             {
               loader: 'babel-loader',
@@ -27,8 +26,8 @@ module.exports = {
           ],
         },
         {
-          test: /\.css$/,
-          include: path.resolve(__dirname, 'src'),
+          test: /\.css$/i,
+          include: path.resolve(import.meta.dirname, 'src'),
           use: ['style-loader', 'css-loader'],
         },
       ],

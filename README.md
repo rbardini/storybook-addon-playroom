@@ -20,6 +20,7 @@ npm install --save-dev storybook-addon-playroom
 
 ```js
 // .storybook/main.js
+
 export default {
   addons: ['storybook-addon-playroom'],
 }
@@ -37,9 +38,11 @@ The addon can be configured via the `playroom` [parameter](https://storybook.js.
 | `includeDecorators`              | `boolean` | whether to include global decorators in stories code | `false`                 |
 | `reactElementToJSXStringOptions` | `object`  | [react-element-to-jsx-string options][1]             | `{ sortProps: false }`  |
 
-To configure for all stories, set the `playroom` parameter in [`.storybook/preview.js`](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering):
+To configure for all stories, set the `playroom` [parameter](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering):
 
 ```js
+// .storybook/preview.js
+
 export const parameters = {
   playroom: {
     url: 'http://localhost:9000',
@@ -52,61 +55,70 @@ You can also configure on per-story or per-component basis using [parameter inhe
 ```jsx
 // Button.stories.js
 
-// Use predefined code instead of story source in all Button stories
 export default {
   title: 'Button',
+  component: Button,
   parameters: {
     playroom: {
+      // Use predefined code instead of story source on all Button stories
       code: '<Button>Hello Button</Button>',
     },
   },
 }
 
-// Disable addon in Button/Large story only
-export const Large = Template.bind({})
-Large.parameters = {
-  playroom: {
-    disable: true,
+export const Large = {
+  args: {
+    size: 'large',
   },
-}
-```
-
-> **Note:** Disabling the addon does not hide the _Playroom_ tab from preview. For that, you must use Storybook's own [`previewTabs`](https://github.com/storybookjs/storybook/pull/9095) parameter:
-
-```js
-Story.parameters = {
-  previewTabs: {
-    'storybook/playroom/panel': {
-      hidden: true,
+  parameters: {
+    playroom: {
+      // Disable addon in Button/Large story only
+      disable: true,
     },
   },
 }
 ```
 
-## Generating Playroom snippets from stories
+> **Note:** Disabling the addon does not hide the _Playroom_ tab. For that, you must use Storybook's own [`previewTabs`](https://github.com/storybookjs/storybook/pull/9095) parameter:
 
-> **Note:** This is an experimental feature.
+```js
+// Button.stories.js
 
-Playroom addon comes with a `sb-playroom` CLI tool that can auto-generate [Playroom snippets](https://github.com/seek-oss/playroom#snippets) from Storybook stories via the `gen-snippets` command:
-
-```console
-$ sb-playroom gen-snippets --help
-Usage: sb-playroom gen-snippets [options] [config-dir]
-
-generate Playroom snippets from stories (experimental)
-
-Options:
-  -o, --out-file <path>     output file (default: "snippets.json")
-  -c, --config-file <path>  Babel config file
-  -h, --help                display help for command
+export const Large = {
+  parameters: {
+    playroom: {
+      disable: true,
+    },
+    previewTabs: {
+      // Hide Playroom tab
+      'storybook/playroom/tab': {
+        hidden: true,
+      },
+    },
+  },
+}
 ```
 
-By default, `gen-snippets` will fetch the Storybook configuration from the `.storybook` directory and output the snippets to a `snippets.json` file. Different input and output paths can be passed as arguments.
+## FAQ
 
-You can then reference the output file in [`playroom.config.js`](https://github.com/seek-oss/playroom#getting-started).
+### Why does my generated Playroom code contain nonsensical component names?
 
-### Babel configuration
+If you see mangled component names like `<O />` instead of `<Card />`, you may need to [customize Storybook's Vite setup](https://storybook.js.org/docs/api/main-config/main-config-vite-final) and [disable minification](https://vitejs.dev/config/build-options#build-minify):
 
-Because Playroom addon programmatically runs Storybook to collect story sources, Babel is used to compile stories on the fly. If the loaded Babel configuration does not work with your Storybook, a [Babel config file](https://babeljs.io/docs/en/config-files) can be defined with the `-c, --config-file` option.
+```js
+// .storybook/main.js
+
+export default {
+  addons: ['storybook-addon-playroom'],
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      build: {
+        // Disable minification
+        minify: false,
+      },
+    })
+  },
+}
+```
 
 [1]: https://github.com/algolia/react-element-to-jsx-string#reactelementtojsxstringreactelement-options

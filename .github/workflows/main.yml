@@ -2,10 +2,10 @@ name: Main
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   test-build-release:
@@ -38,9 +38,10 @@ jobs:
       - name: Release
         uses: cycjimmy/semantic-release-action@v4
         with:
+          semantic_version: 24
           extra_plugins: |
-            conventional-changelog-conventionalcommits@6
-        if: github.ref == 'refs/heads/master'
+            conventional-changelog-conventionalcommits
+        if: github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
