@@ -1,8 +1,8 @@
 import { useGlobals } from '@storybook/manager-api'
 import { styled } from '@storybook/theming'
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 
-import { EVENTS, PARAM_KEY } from './constants'
+import { PARAM_KEY } from './constants'
 
 interface TabProps {
   active: boolean
@@ -20,7 +20,7 @@ const Iframe = styled.iframe({
 
 export const Tab = memo<TabProps>(({ active }) => {
   const [globals] = useGlobals()
-  const { codeUrl } = globals[PARAM_KEY]
+  const { codeUrl } = globals[PARAM_KEY] ?? {}
 
   if (!active) {
     return null
