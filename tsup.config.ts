@@ -1,11 +1,9 @@
-import { defineConfig, type Options } from 'tsup'
 import { readFile } from 'fs/promises'
-import { globalPackages as globalManagerPackages } from '@storybook/manager/globals'
-import { globalPackages as globalPreviewPackages } from '@storybook/preview/globals'
+import { globalPackages as globalManagerPackages } from 'storybook/internal/manager/globals'
+import { globalPackages as globalPreviewPackages } from 'storybook/internal/preview/globals'
+import { defineConfig, type Options } from 'tsup'
 
-// The current browsers supported by Storybook v7
-const BROWSER_TARGET: Options['target'] = ['chrome100', 'safari15', 'firefox91']
-const NODE_TARGET: Options['target'] = ['node18']
+const NODE_TARGET: Options['target'] = 'node20'
 
 type BundlerConfig = {
   bundler?: {
@@ -44,7 +42,7 @@ export default defineConfig(async options => {
       entry: exportEntries,
       dts: { resolve: true },
       format: ['esm', 'cjs'],
-      target: [...BROWSER_TARGET, ...NODE_TARGET],
+      target: NODE_TARGET,
       platform: 'neutral',
       external: [...globalManagerPackages, ...globalPreviewPackages],
     })
@@ -55,7 +53,6 @@ export default defineConfig(async options => {
       ...commonConfig,
       entry: managerEntries,
       format: ['esm'],
-      target: BROWSER_TARGET,
       platform: 'browser',
       external: globalManagerPackages,
     })
@@ -67,7 +64,6 @@ export default defineConfig(async options => {
       entry: previewEntries,
       dts: { resolve: true },
       format: ['esm', 'cjs'],
-      target: BROWSER_TARGET,
       platform: 'browser',
       external: globalPreviewPackages,
     })

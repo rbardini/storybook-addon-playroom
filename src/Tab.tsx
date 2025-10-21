@@ -1,6 +1,6 @@
-import { useGlobals } from '@storybook/manager-api'
-import { styled } from '@storybook/theming'
 import React, { memo } from 'react'
+import { useGlobals } from 'storybook/manager-api'
+import { styled } from 'storybook/theming'
 
 import { PARAM_KEY } from './constants'
 
