@@ -1,5 +1,5 @@
-import { type useGlobals } from '@storybook/preview-api'
-import { Options as ReactElementToJSXStringOptions } from 'react-element-to-jsx-string'
+import { type useGlobals } from 'storybook/preview-api'
+import { type Options as ReactElementToJSXStringOptions } from 'react-element-to-jsx-string'
 
 import { PARAM_KEY } from './constants'
 

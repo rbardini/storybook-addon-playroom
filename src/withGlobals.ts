@@ -1,14 +1,14 @@
-import { useGlobals } from '@storybook/preview-api'
+import { createUrl } from 'playroom'
+import type { ReactElement } from 'react'
+import reactElementToJSXString from 'react-element-to-jsx-string'
 import type {
   Renderer,
   PartialStoryFn as StoryFunction,
   StoryContext,
-} from '@storybook/types'
-import { createUrl } from 'playroom/utils'
-import type { ReactElement } from 'react'
-import reactElementToJSXString from 'react-element-to-jsx-string'
+} from 'storybook/internal/types'
+import { useGlobals } from 'storybook/preview-api'
 
-import { EVENTS, PARAM_KEY } from './constants'
+import { PARAM_KEY } from './constants'
 import { getGlobals, getOptions, setGlobals } from './utils'
 
 const updateCodeUrl = (
