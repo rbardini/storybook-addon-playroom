@@ -24,6 +24,11 @@ export const withGlobals = (
 ) => {
   const globals = useGlobals()
   const { parameters, undecoratedStoryFn } = context
+
+  if (context.viewMode !== 'story') {
+    return StoryFn()
+  }
+
   const {
     url,
     code,
