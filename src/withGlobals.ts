@@ -26,7 +26,7 @@ export const withGlobals = (
   const story = StoryFn() as ReactElement
   const { parameters, undecoratedStoryFn, viewMode } = context
 
-  if (viewMode !== 'story') return StoryFn()
+  if (viewMode !== 'story') return story
 
   const {
     url,
