@@ -23,7 +23,11 @@ export const withGlobals = (
   context: StoryContext<Renderer>,
 ) => {
   const globals = useGlobals()
-  const { parameters, undecoratedStoryFn } = context
+  const story = StoryFn() as ReactElement
+  const { parameters, undecoratedStoryFn, viewMode } = context
+
+  if (viewMode !== 'story') return story
+
   const {
     url,
     code,
@@ -31,8 +35,6 @@ export const withGlobals = (
     includeDecorators,
     reactElementToJSXStringOptions,
   } = getOptions(parameters[PARAM_KEY])
-
-  const story = StoryFn() as ReactElement
 
   if (disable) {
     updateCodeUrl(globals, undefined)
