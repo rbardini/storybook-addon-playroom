@@ -3,7 +3,7 @@ import { mergeConfig } from 'vite'
 
 const config = defineMain({
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['./local-preset.cjs'],
+  addons: [import.meta.resolve('./local-preset.ts')],
   framework: '@storybook/react-vite',
   async viteFinal(config) {
     return mergeConfig(config, {

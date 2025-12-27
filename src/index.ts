@@ -1,2 +1,5 @@
-// make it work with --isolatedModules
-export default {}
+import { definePreviewAddon } from 'storybook/internal/csf'
+
+import addonAnnotations from './preview'
+
+export default () => definePreviewAddon(addonAnnotations)
