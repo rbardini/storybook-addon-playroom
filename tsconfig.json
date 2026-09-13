@@ -18,5 +18,5 @@
     "target": "esnext",
     "verbatimModuleSyntax": true
   },
-  "include": ["src/**/*", "tsup.config.ts"]
+  "include": ["src/**/*", "tsdown.config.ts"]
 }

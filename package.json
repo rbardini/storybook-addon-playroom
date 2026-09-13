@@ -45,8 +45,7 @@
   ],
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "tsup",
-    "postbuild": "tsup --platform node",
+    "build": "tsdown",
     "build:watch": "npm run build -- --watch",
     "build-playroom": "playroom build",
     "build-storybook": "storybook build",
@@ -81,7 +80,7 @@
     "rimraf": "^6.0.0",
     "storybook": "next",
     "style-loader": "^4.0.0",
-    "tsup": "^8.0.0",
+    "tsdown": "^0.23.0",
     "typescript": "^5.9.0",
     "vite": "^8.0.0"
   },
