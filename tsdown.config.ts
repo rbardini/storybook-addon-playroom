@@ -1,6 +1,6 @@
-import { defineConfig, type Options } from 'tsup'
+import { defineConfig, type UserConfig } from 'tsdown'
 
-export default defineConfig(async options => {
+export default defineConfig(async () => {
   const packageJson = (
     await import('./package.json', { with: { type: 'json' } })
   ).default
@@ -8,22 +8,24 @@ export default defineConfig(async options => {
     bundler: { managerEntries = [], previewEntries = [] },
   } = packageJson
 
-  const commonConfig: Options = {
+  const commonConfig: UserConfig = {
     clean: false,
-    format: ['esm'],
+    format: 'esm',
+    platform: 'browser',
+    target: 'esnext',
     treeshake: true,
-    splitting: true,
-    external: ['react', 'react-dom', '@storybook/icons'],
+    deps: {
+      neverBundle: ['react', 'react-dom', '@storybook/icons'],
+    },
   }
 
-  const configs: Options[] = []
+  const configs: UserConfig[] = []
 
   if (managerEntries.length) {
     configs.push({
       ...commonConfig,
       entry: managerEntries,
-      platform: 'browser',
-      target: 'esnext',
+      dts: false,
     })
   }
 
@@ -31,8 +33,6 @@ export default defineConfig(async options => {
     configs.push({
       ...commonConfig,
       entry: previewEntries,
-      platform: 'browser',
-      target: 'esnext',
       dts: true,
     })
   }
