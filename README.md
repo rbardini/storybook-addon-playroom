@@ -18,17 +18,39 @@
 npm install --save-dev storybook-addon-playroom
 ```
 
-```js
-// .storybook/main.js
+Register the addon in `.storybook/main.ts`:
 
-export default {
+```ts
+// .storybook/main.ts
+
+// Replace your-framework with the framework you are using (e.g., react-vite, nextjs-vite)
+import { defineMain } from '@storybook/your-framework/node'
+
+export default defineMain({
+  // ...rest of config
   addons: ['storybook-addon-playroom'],
-}
+})
+```
+
+Register the addon's preview annotations in `.storybook/preview.ts`:
+
+```ts
+// .storybook/preview.ts
+
+// Replace your-framework with the framework you are using (e.g., react-vite, nextjs-vite)
+import { definePreview } from '@storybook/your-framework'
+
+import playroom from 'storybook-addon-playroom'
+
+export default definePreview({
+  // ...rest of preview
+  addons: [playroom()], // 👈 register the addon here
+})
 ```
 
 ## Configuration
 
-The addon can be configured via the `playroom` [parameter](https://storybook.js.org/docs/react/writing-stories/parameters). The following options are available:
+The addon can be configured via the `playroom` [parameter](https://storybook.js.org/docs/writing-stories/parameters). The following options are available:
 
 | Option                           | Type      | Description                                          | Default                 |
 | :------------------------------- | :-------- | :--------------------------------------------------- | :---------------------- |
@@ -38,24 +60,31 @@ The addon can be configured via the `playroom` [parameter](https://storybook.js.
 | `includeDecorators`              | `boolean` | whether to include global decorators in stories code | `false`                 |
 | `reactElementToJSXStringOptions` | `object`  | [react-element-to-jsx-string options][1]             | `{ sortProps: false }`  |
 
-To configure for all stories, set the `playroom` [parameter](https://storybook.js.org/docs/react/configure/overview#configure-story-rendering):
+To configure for all stories, set the `playroom` [parameter](https://storybook.js.org/docs/configure):
 
-```js
-// .storybook/preview.js
+```ts
+// .storybook/preview.ts
 
-export const parameters = {
-  playroom: {
-    url: 'http://localhost:9000',
+export default definePreview({
+  parameters: {
+    playroom: {
+      url: 'http://localhost:9000',
+    },
   },
-}
+})
 ```
 
-You can also configure on per-story or per-component basis using [parameter inheritance](https://storybook.js.org/docs/react/writing-stories/parameters#component-parameters):
+You can also configure on per-story or per-component basis using [parameter inheritance](https://storybook.js.org/docs/writing-stories/parameters#component-parameters):
 
-```jsx
-// Button.stories.js
+```tsx
+// Button.stories.ts
 
-export default {
+import preview from '../.storybook/preview'
+
+import { Button } from './Button'
+
+// Set predefined code for all Button stories
+const meta = preview.meta({
   title: 'Button',
   component: Button,
   parameters: {
@@ -64,19 +93,19 @@ export default {
       code: '<Button>Hello Button</Button>',
     },
   },
-}
+})
 
-export const Large = {
+// Disable addon in Button/Large story only
+export const Large = meta.story({
   args: {
     size: 'large',
   },
   parameters: {
     playroom: {
-      // Disable addon in Button/Large story only
       disable: true,
     },
   },
-}
+})
 ```
 
 ## FAQ
@@ -85,10 +114,13 @@ export const Large = {
 
 If you see mangled component names like `<O />` instead of `<Card />`, you may need to [customize Storybook's Vite setup](https://storybook.js.org/docs/api/main-config/main-config-vite-final) and [disable minification](https://vitejs.dev/config/build-options#build-minify):
 
-```js
-// .storybook/main.js
+```ts
+// .storybook/main.ts
 
-export default {
+import { defineMain } from '@storybook/your-framework/node'
+import { mergeConfig } from 'vite'
+
+export default defineMain({
   addons: ['storybook-addon-playroom'],
   async viteFinal(config) {
     return mergeConfig(config, {
@@ -98,7 +130,7 @@ export default {
       },
     })
   },
-}
+})
 ```
 
 [1]: https://github.com/algolia/react-element-to-jsx-string#reactelementtojsxstringreactelement-options

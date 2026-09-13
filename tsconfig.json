@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react",
@@ -16,7 +15,7 @@
     "rootDir": ".",
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext", // Node 20 according to https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping#node-20
+    "target": "esnext",
     "verbatimModuleSyntax": true
   },
   "include": ["src/**/*", "tsup.config.ts"]
