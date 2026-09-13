@@ -1,7 +1,7 @@
 {
   "name": "storybook-addon-playroom",
   "version": "0.0.0-development",
-  "description": "Design with Playroom inside Storybook, using each story source as a starting point",
+  "description": "Design with Playroom from Storybook, using each story source as a starting point",
   "keywords": [
     "storybook-addon",
     "design",

@@ -1,13 +1,14 @@
 import React from 'react'
 import { addons, types } from 'storybook/manager-api'
 
-import { ADDON_ID, PARAM_KEY, TAB_ID } from './constants'
-import { Tab } from './Tab'
+import { ADDON_ID, TOOL_ID } from './constants'
+import { Tool } from './Tool'
 
 addons.register(ADDON_ID, () => {
-  addons.add(TAB_ID, {
-    type: types.TAB,
+  addons.add(TOOL_ID, {
     title: 'Playroom',
-    render: ({ active }) => <Tab active={!!active} />,
+    type: types.TOOL,
+    match: ({ viewMode }) => viewMode === 'story',
+    render: Tool,
   })
 })

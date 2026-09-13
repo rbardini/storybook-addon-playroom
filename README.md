@@ -4,7 +4,7 @@
 [![Build status](https://img.shields.io/github/actions/workflow/status/rbardini/storybook-addon-playroom/main.yml)](https://github.com/rbardini/storybook-addon-playroom/actions)
 [![Dependencies status](https://img.shields.io/librariesio/release/npm/storybook-addon-playroom)](https://libraries.io/npm/storybook-addon-playroom)
 
-🧩 Design with [Playroom](https://github.com/seek-oss/playroom) inside [Storybook](https://storybook.js.org), using each story source as a starting point.
+🧩 Design with [Playroom](https://github.com/seek-oss/playroom) from [Storybook](https://storybook.js.org), using each story source as a starting point.
 
 ![Demo](demo.gif)
 
@@ -74,26 +74,6 @@ export const Large = {
     playroom: {
       // Disable addon in Button/Large story only
       disable: true,
-    },
-  },
-}
-```
-
-> **Note:** Disabling the addon does not hide the _Playroom_ tab. For that, you must use Storybook's own [`previewTabs`](https://github.com/storybookjs/storybook/pull/9095) parameter:
-
-```js
-// Button.stories.js
-
-export const Large = {
-  parameters: {
-    playroom: {
-      disable: true,
-    },
-    previewTabs: {
-      // Hide Playroom tab
-      'storybook/playroom/tab': {
-        hidden: true,
-      },
     },
   },
 }
