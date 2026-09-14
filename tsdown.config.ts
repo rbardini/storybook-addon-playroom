@@ -16,6 +16,14 @@ export default defineConfig(async () => {
     treeshake: true,
     deps: {
       neverBundle: ['react', 'react-dom', '@storybook/icons'],
+      // TODO remove once https://github.com/algolia/react-element-to-jsx-string/pull/974 ships
+      alwaysBundle: ['react-element-to-jsx-string'],
+    },
+    inputOptions: {
+      // TODO remove once https://github.com/algolia/react-element-to-jsx-string/pull/974 ships
+      resolve: {
+        mainFields: ['module', 'main'],
+      },
     },
   }
 
