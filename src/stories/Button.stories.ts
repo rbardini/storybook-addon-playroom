@@ -1,42 +1,38 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import preview from '../../.storybook/preview'
 
 import { Button } from './Button'
 
-type Story = StoryObj<typeof Button>
-
-const meta: Meta<typeof Button> = {
+const meta = preview.meta({
   title: 'Example/Button',
   component: Button,
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-}
+})
 
-export default meta
-
-export const Primary: Story = {
+export const Primary = meta.story({
   args: {
     primary: true,
     children: 'Button',
   },
-}
+})
 
-export const Secondary: Story = {
+export const Secondary = meta.story({
   args: {
     children: 'Button',
   },
-}
+})
 
-export const Large: Story = {
+export const Large = meta.story({
   args: {
     size: 'large',
     children: 'Button',
   },
-}
+})
 
-export const Small: Story = {
+export const Small = meta.story({
   args: {
     size: 'small',
     children: 'Button',
   },
-}
+})
