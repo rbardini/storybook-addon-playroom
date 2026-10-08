@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "playroom": "^1.0.0",
-    "react-element-to-jsx-string": "^17.0.0"
+    "react-element-to-jsx-string": "^18.0.0"
   },
   "devDependencies": {
     "@skypack/package-check": "^0.2.0",
